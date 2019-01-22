@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
 
-        redireccionarUsuario();
+        //redireccionarUsuario();
     }
 
     private void redireccionarUsuario(){
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 UIDAdmin = dataSnapshot.child("uid").getValue().toString();
-                redireccionarUsuario();
+                //redireccionarUsuario();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}
@@ -147,7 +147,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void bt_buscar(View view){
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("desperfectos",listaDesperfectos);
 
+        Intent i = new Intent(MainActivity.this, Busqueda.class);
+        i.putExtras(bundle);
+        startActivity(i);
     }
     public void bt_home(View view){
         Intent login = new Intent(this, Identificacion.class);
