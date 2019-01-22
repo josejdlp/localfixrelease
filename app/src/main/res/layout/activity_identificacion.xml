@@ -10,7 +10,7 @@
         android:id="@+id/btn_login_google"
         android:layout_width="208dp"
         android:layout_height="39dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +38,7 @@
         android:id="@+id/btn_login_facebook"
         android:layout_width="205dp"
         android:layout_height="27dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="64dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,7 +50,7 @@
         android:id="@+id/btn_new_account"
         android:layout_width="208dp"
         android:layout_height="39dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:text="@string/btn_new_account"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -87,7 +87,7 @@
         android:id="@+id/et_login_email"
         android:layout_width="384dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Correo electronico"
         android:inputType="textEmailAddress"
@@ -95,7 +95,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_signin_main" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_login" />
 
     <TextView
         android:id="@+id/tv_signin_main"
@@ -109,5 +109,16 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_login"
+        android:layout_width="wrap_content"
+        android:layout_height="175dp"
+        android:layout_marginTop="55dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_signin_main"
+        app:srcCompat="@drawable/logo_localfix" />
 
 </android.support.constraint.ConstraintLayout>
