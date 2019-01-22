@@ -3,8 +3,12 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -41,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         referenciaBBDD = FirebaseDatabase.getInstance().getReference("Desperfectos");
         mAuth = FirebaseAuth.getInstance();
         showListaDesperfectos();
+
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
 
     }
 
@@ -188,4 +195,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     */
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int res_id = item.getItemId();
+
+        if(res_id == R.id.action_settings){
+            Toast.makeText(getApplicationContext(), "Settings Options", Toast.LENGTH_LONG).show();
+        }
+        return true;
+    }
 }
