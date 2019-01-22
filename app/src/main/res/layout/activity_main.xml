@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <ListView
+        android:id="@+id/lista"
+        android:layout_width="381dp"
+        android:layout_height="425dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="bt_buscar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton5"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@mipmap/ic_search_foreground" />
+
+    <ImageButton
+        android:id="@+id/imageButton5"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="bt_mapa"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton6"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageButton4"
+        app:srcCompat="@mipmap/ic_gps_foreground" />
+
+    <ImageButton
+        android:id="@+id/imageButton6"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="bt_home"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton7"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageButton5"
+        app:srcCompat="@mipmap/ic_home_foreground" />
+
+    <ImageButton
+        android:id="@+id/imageButton7"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="bt_nuevo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton8"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageButton6"
+        app:srcCompat="@mipmap/ic_add_foreground" />
+
+    <ImageButton
+        android:id="@+id/imageButton8"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="bt_filtrar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageButton7"
+        app:srcCompat="@mipmap/ic_filter_foreground" />
+
+</android.support.constraint.ConstraintLayout>

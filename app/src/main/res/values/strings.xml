@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">localfix</string>
+    <string name="st_nombre_desperfecto">Nombre Desperfecto</string>
+    <string name="st_ubicacion">Ubicación</string>
+    <string name="title_activity_subir_imagenes">SubirImagenes</string>
+    <string name="title_activity_mapa">Map</string>
+
+    <string name="btn_logOut">Cerrar Sesion</string>
+    <string name="btn_new_account">Registrarse</string>
+    <string name="btn_signin_emailpass">Iniciar Sesion</string>
+    <string name="facebook_app_id">357839571464909</string>
+</resources>

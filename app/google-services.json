@@ -1,0 +1,107 @@
+{
+  "project_info": {
+    "project_number": "423568398606",
+    "firebase_url": "https://fir-prueba-e2948.firebaseio.com",
+    "project_id": "fir-prueba-e2948",
+    "storage_bucket": "fir-prueba-e2948.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:423568398606:android:42f5be1b52348147",
+        "android_client_info": {
+          "package_name": "com.example.josejimenezdelapaz.firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "423568398606-s3m8c4dmgokshttfak81tib4aualqqv2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.josejimenezdelapaz.firebase",
+            "certificate_hash": "b7f7222a58865046b1d301f151f173fa64ebd41b"
+          }
+        },
+        {
+          "client_id": "423568398606-tjs68p2372r2ctek0q5eujbeje384idq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHCFXfHXUTM4rxt7BZIF2YG9IEkB08Yzw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "423568398606-tjs68p2372r2ctek0q5eujbeje384idq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:423568398606:android:3ed4e27d0f1aaa7f",
+        "android_client_info": {
+          "package_name": "com.example.josejimenezdelapaz.localfix"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "423568398606-qtaj5feeqaj3aj0bsqv33fffucnvdo89.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.josejimenezdelapaz.localfix",
+            "certificate_hash": "b7f7222a58865046b1d301f151f173fa64ebd41b"
+          }
+        },
+        {
+          "client_id": "423568398606-uvug9k9erjik8febh2ejpcdg11k8532p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.josejimenezdelapaz.localfix",
+            "certificate_hash": "2c17365522fa94767b2a9cac7fce724058eee98e"
+          }
+        },
+        {
+          "client_id": "423568398606-tjs68p2372r2ctek0q5eujbeje384idq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHCFXfHXUTM4rxt7BZIF2YG9IEkB08Yzw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "423568398606-tjs68p2372r2ctek0q5eujbeje384idq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
