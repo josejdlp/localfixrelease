@@ -147,7 +147,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void bt_buscar(View view){
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("desperfectos",listaDesperfectos);
 
+        Intent i = new Intent(MainActivity.this, Busqueda.class);
+        i.putExtras(bundle);
+        startActivity(i);
     }
     public void bt_home(View view){
         Intent login = new Intent(this, Identificacion.class);

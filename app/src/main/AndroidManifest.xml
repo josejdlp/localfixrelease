@@ -5,9 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-
-
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".LocalFixApp"
@@ -33,9 +31,7 @@
         <activity android:name=".VisualizarDesperfecto" />
         <activity android:name=".UploadImages" />
         <activity android:name=".Identificacion" />
-
-
-        <activity android:name=".RegistroUsuario"></activity>
+        <activity android:name=".RegistroUsuario" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -44,8 +40,8 @@
         <activity
             android:name=".Mapa"
             android:label="@string/title_activity_mapa" />
-        <activity android:name=".VistaAdministrador"></activity>
-
+        <activity android:name=".VistaAdministrador" />
+        <activity android:name=".Busqueda"></activity>
     </application>
 
 </manifest>
