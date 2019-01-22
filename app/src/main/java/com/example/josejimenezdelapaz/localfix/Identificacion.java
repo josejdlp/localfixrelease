@@ -230,6 +230,15 @@ public class Identificacion extends AppCompatActivity implements GoogleApiClient
     protected void onStart(){
         super.onStart();
 
+        //Si es administrador y ya está logueado, se le manda a su vista directamente
+        if (mAuth.getCurrentUser() != null) {
+            //Toast.makeText(Identificacion.this, mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
+            if (mAuth.getCurrentUser().getUid().equals(uid)) {
+                Intent i = new Intent(Identificacion.this, VistaAdministrador.class);
+                startActivity(i);
+            }
+        }
+
         mAuth.addAuthStateListener(firebaseAuthListener);
 
         FirebaseUser currentUser = mAuth.getCurrentUser();

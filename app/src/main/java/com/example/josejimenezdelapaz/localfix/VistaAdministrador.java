@@ -14,6 +14,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,10 +35,22 @@ public class VistaAdministrador extends AppCompatActivity {
     private DatabaseReference referenciaBBDD;
     private FirebaseAuth mAuth;
 
+    private GoogleSignInClient mGoogleSignInClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vista_administrador);
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions
+                .DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         referenciaBBDD = FirebaseDatabase.getInstance().getReference("Desperfectos");
         mAuth = FirebaseAuth.getInstance();
@@ -71,8 +88,8 @@ public class VistaAdministrador extends AppCompatActivity {
         ArrayAdapter adaptator =
                 new ArrayAdapter(this, R.layout.desperfectoitemlayout, listaDesperfectos){
                     public View getView(final int position
-                    , View convertView
-                    , ViewGroup parent){
+                            , View convertView
+                            , ViewGroup parent){
                         LayoutInflater inflater = (LayoutInflater) getContext()
                                 .getSystemService(getContext().LAYOUT_INFLATER_SERVICE);
 
@@ -110,22 +127,26 @@ public class VistaAdministrador extends AppCompatActivity {
 
     }
 
-    public void bt_mapa(View view){
-        Toast.makeText(VistaAdministrador.this, "Función Mapa", Toast.LENGTH_SHORT).show();
+    public void btn_salir(View view){
+        mAuth.signOut();
+
+        mGoogleSignInClient.signOut().addOnCompleteListener(this,
+                new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        //Toast.makeText(Identificacion.this, "FUERA DE AQUÍ", Toast.LENGTH_SHORT).show();
+                        //updateUI(null);
+                    }
+                });
+
+
+        Intent i = new Intent(VistaAdministrador.this, MainActivity.class);
+        startActivity(i);
     }
 
-    public void bt_home(View view){
-        Intent login = new Intent(this, Identificacion.class);
-        //login.putExtra("UIDAdmin", UIDAdmin);
-        startActivity(login);
-    }
-
-    public void bt_nuevo(View view){
-
-    }
-
-    public void bt_filtrar(View view){
-        Toast.makeText(VistaAdministrador.this, "Función Filtrar", Toast.LENGTH_SHORT).show();
+    public void btn_principal(View view){
+        Intent i = new Intent(VistaAdministrador.this, MainActivity.class);
+        startActivity(i);
     }
 
 }

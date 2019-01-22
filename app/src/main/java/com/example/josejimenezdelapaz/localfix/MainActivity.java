@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
 
-        redireccionarUsuario();
+        //redireccionarUsuario();
     }
 
     private void redireccionarUsuario(){
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 UIDAdmin = dataSnapshot.child("uid").getValue().toString();
-                redireccionarUsuario();
+                //redireccionarUsuario();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}
