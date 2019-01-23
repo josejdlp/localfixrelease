@@ -36,9 +36,9 @@ public class VistaAdministrador extends AppCompatActivity {
 
     private GoogleSignInClient mGoogleSignInClient;
 
-    private String ESTADO_ADMITIDO = "admitido";
-    private String ESTADO_EN_REPARACION = "en reparacion";
-    private String ESTADO_REPARADO = "reparado";
+    private String ESTADO_ADMITIDO = "Admitido";
+    private String ESTADO_EN_REPARACION = "En reparacion";
+    private String ESTADO_REPARADO = "Reparado";
 
     private int GRIS = 0xF0F8FF;
     private int AZUL = 0x00FFFF;
@@ -105,10 +105,12 @@ public class VistaAdministrador extends AppCompatActivity {
 
 
                         //Crear la vista para cada fila
-                        View fila = inflater.inflate(R.layout.desperfectoitemlayout_admin, parent, false);
+                        final View fila = inflater.inflate(R.layout.desperfectoitemlayout_admin, parent, false);
                         TextView tituloView = (TextView) fila.findViewById(R.id.tit_lista_desp_admin);
                         tituloView.setText(listaDesperfectos.get(position).getDescripcion());
 
+                        TextView estado = (TextView) fila.findViewById(R.id.estado_lista_desp_admin);
+                        estado.setText(listaDesperfectos.get(position).getEstado());
 
                         //Localizar los botones
                         Button botonBorrar = (Button) fila.findViewById(R.id.borrar_lista_desp_admin);
@@ -130,6 +132,9 @@ public class VistaAdministrador extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 referenciaBBDD.child(listaDesperfectos.get(position).getId()).child("estado").setValue(ESTADO_ADMITIDO);
+                                TextView estado = (TextView) fila.findViewById(R.id.estado_lista_desp_admin);
+                                estado.setText(ESTADO_ADMITIDO);
+
                             }
                         });
 
@@ -137,6 +142,8 @@ public class VistaAdministrador extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 referenciaBBDD.child(listaDesperfectos.get(position).getId()).child("estado").setValue(ESTADO_EN_REPARACION);
+                                TextView estado = (TextView) fila.findViewById(R.id.estado_lista_desp_admin);
+                                estado.setText(ESTADO_EN_REPARACION);
                             }
                         });
 
@@ -144,6 +151,8 @@ public class VistaAdministrador extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 referenciaBBDD.child(listaDesperfectos.get(position).getId()).child("estado").setValue(ESTADO_REPARADO);
+                                TextView estado = (TextView) fila.findViewById(R.id.estado_lista_desp_admin);
+                                estado.setText(ESTADO_REPARADO);
                             }
                         });
 

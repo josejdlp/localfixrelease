@@ -59,12 +59,12 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
+
     }
 
     @Override
     protected void onStart(){
         super.onStart();
-
         //redireccionarUsuario();
     }
 
@@ -111,16 +111,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void cargarLista(){
-        ListView lista = (ListView) findViewById(R.id.lista);
-        Log.i("2 TAMM","2 tamanno lista"+listaDesperfectos.size());
-        // desperfectos = Desperfecto.populateDesperfectos();
 
+        ListView lista = (ListView) findViewById(R.id.lista);
         ArrayList<String> filtro = new ArrayList<String>();
 
-        if(MOSTRAR_NO_ACEPTADOS) filtro.add("no aceptado");
-        if(MOSTRAR_ACEPTDOS) filtro.add("admitido");
-        if(MOSTRAR_EN_REPARACION) filtro.add("en reparacion");
-        if(MOSTRAR_REPARADOS) filtro.add("reparado");
+        if(MOSTRAR_NO_ACEPTADOS) filtro.add("No admitido");
+        if(MOSTRAR_ACEPTDOS) filtro.add("Admitido");
+        if(MOSTRAR_EN_REPARACION) filtro.add("En reparacion");
+        if(MOSTRAR_REPARADOS) filtro.add("Reparado");
 
         listaDesperfectosMostrar.clear();
 
@@ -163,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                         //Enviar el desperfecto seleccionado a la vista.
                         Intent visualizarDesperfecto = new Intent (MainActivity.this, VisualizarDesperfecto.class);
                         Bundle bundle=new Bundle();
-                        bundle.putSerializable("desperfecto",listaDesperfectosMostrar.get(position));
+                        bundle.putSerializable("desperfecto",listaDesperfectos.get(position));
                         visualizarDesperfecto.putExtras(bundle);
                         // visualizarDesperfecto.putExtra("EXTRA_IMAGENES", listaDesperfectos.get(position).getImagenes());
                         startActivity(visualizarDesperfecto);
@@ -226,7 +224,8 @@ public class MainActivity extends AppCompatActivity {
 
         switch(res_id){
             case R.id.action_search:
-                Toast.makeText(getApplicationContext(), "Boton Buscar", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(MainActivity.this, Busqueda.class);
+                startActivity(i);
                 break;
             case R.id.action_settings:
                 Toast.makeText(getApplicationContext(), "Boton Ajustes", Toast.LENGTH_SHORT).show();

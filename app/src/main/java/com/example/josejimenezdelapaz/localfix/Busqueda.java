@@ -1,11 +1,13 @@
 package com.example.josejimenezdelapaz.localfix;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -13,24 +15,36 @@ import java.util.ArrayList;
 
 public class Busqueda extends AppCompatActivity {
 
-    private ArrayList<String> palabrasClave = new ArrayList<String>();
-    private ArrayList<DesperfectoActivity> listaDesperfectos = new ArrayList<DesperfectoActivity>();
-    private ArrayList<DesperfectoActivity> busqueda = new ArrayList<>();
+    //private ArrayList<String> palabrasClave = new ArrayList<String>();
+    //private ArrayList<DesperfectoActivity> listaDesperfectos = new ArrayList<DesperfectoActivity>();
+    //private ArrayList<DesperfectoActivity> busqueda = new ArrayList<>();
 
+    TextView busqueda;
+    ImageButton buscar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_busqueda);
 
-        Bundle bundleObject=getIntent().getExtras();
-        listaDesperfectos=(ArrayList<DesperfectoActivity>) bundleObject.getSerializable("desperfectos");
+        busqueda = (TextView) findViewById(R.id.texto_busqueda);
+        buscar = (ImageButton) findViewById(R.id.btn_buscar_vista_buscar);
 
-        cargarLista();
+        //Bundle bundleObject=getIntent().getExtras();
+        //listaDesperfectos=(ArrayList<DesperfectoActivity>) bundleObject.getSerializable("desperfectos");
+
+        //cargarLista();
 
     }
 
-    public void btn_buscar(View view) {
+    public void btn_buscar(View view){
+        String texto =  busqueda.getText().toString();
+        Intent i =  new Intent(Busqueda.this, MainActivity.class);
+        i.putExtra("Texto_Busqueda", texto);
+        startActivity(i);
+    }
+
+ /*   public void btn_buscar(View view) {
 
         palabrasClave.clear();
         busqueda.clear();
@@ -56,10 +70,10 @@ public class Busqueda extends AppCompatActivity {
     public void btn_limpiar(View view){
         palabrasClave.clear();
         busqueda.clear();
-        cargarLista();
+        //cargarLista();
     }
 
-    private void cargarLista(){
+    /*private void cargarLista(){
         ListView lista = (ListView) findViewById(R.id.lista_buscar);
 
         ArrayAdapter adaptator =
@@ -103,4 +117,3 @@ public class Busqueda extends AppCompatActivity {
         */
     }
 
-}
