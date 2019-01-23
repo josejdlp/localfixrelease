@@ -118,9 +118,8 @@ public class NuevoDesperfecto extends AppCompatActivity {
                     Toast.makeText(this, "No has seleccionado ninguna dirección", Toast.LENGTH_SHORT).show();
                 }
 
-
             }
 
         }
-    };
+    }
 

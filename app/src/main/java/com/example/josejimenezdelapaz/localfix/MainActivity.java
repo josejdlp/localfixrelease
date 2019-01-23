@@ -281,6 +281,7 @@ public class MainActivity extends AppCompatActivity {
         }else{
             settingsItem.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_icon_logout));
         }
+
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -301,7 +302,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(filtro);
                 break;
             case R.id.action_login:
-
+                Intent login = new Intent(this, Identificacion.class);
+                login.putStringArrayListExtra("UIDAdmin", admins);
+                startActivity(login);
+                break;
             default:
                 break;
         }

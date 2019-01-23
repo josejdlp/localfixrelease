@@ -26,8 +26,8 @@ public class VisualizarDesperfecto extends AppCompatActivity {
     }
 
     private void visualizarDesperfecto(){
-        TextView titulo = (TextView) findViewById(R.id.titulo_visualizar_desperfecto);
-        ImageView img=(ImageView) findViewById(R.id.imagen_visualizar_desperfecto);
+        TextView titulo = (TextView) findViewById(R.id.tv_title);
+        ImageView img=(ImageView) findViewById(R.id.iv_img);
         Bundle bundleObject=getIntent().getExtras();
         desperfecto=(DesperfectoActivity) bundleObject.getSerializable("desperfecto");
         titulo.setText(desperfecto.getTitulo());
@@ -40,7 +40,7 @@ public class VisualizarDesperfecto extends AppCompatActivity {
     }
     public void siguienteImagen(View view){
         if(desperfecto.getImagenes()!=null){
-            ImageView img=(ImageView) findViewById(R.id.imagen_visualizar_desperfecto);
+            ImageView img=(ImageView) findViewById(R.id.iv_img);
             if(posImagen<desperfecto.getImagenes().size()-1){
                 posImagen++;
                 Picasso.with(this).load(desperfecto.getImagenes().get(posImagen)).into(img);
@@ -54,7 +54,7 @@ public class VisualizarDesperfecto extends AppCompatActivity {
     }
     public void anteriorImagen(View view){
         if(desperfecto.getImagenes()!=null){
-            ImageView img=(ImageView) findViewById(R.id.imagen_visualizar_desperfecto);
+            ImageView img=(ImageView) findViewById(R.id.iv_img);
             if(posImagen>0){
                 posImagen--;
                 Picasso.with(this).load(desperfecto.getImagenes().get(posImagen)).into(img);
