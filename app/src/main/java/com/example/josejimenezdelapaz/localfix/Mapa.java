@@ -80,13 +80,16 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMapLongClickLi
     }
     private void MarcarDesperfectos(ArrayList<DesperfectoActivity> l){
         for(int i=0;i<l.size();i++){
-            LatLng pos=new LatLng(Double.parseDouble(l.get(i).getLatitud()),
-                    Double.parseDouble(l.get(i).getLongitud()));
+            if(l.get(i).getLatitud()!="" && l.get(i).getLongitud()!=""){
+                LatLng pos=new LatLng(Double.parseDouble(l.get(i).getLatitud()),
+                        Double.parseDouble(l.get(i).getLongitud()));
 
-            Marker marker = mMap.addMarker(new MarkerOptions()
-                    .position(pos)
-                    .title(l.get(i).getTitulo()));
-            mHashMap.put(marker,i);
+                Marker marker = mMap.addMarker(new MarkerOptions()
+                        .position(pos)
+                        .title(l.get(i).getTitulo()));
+                mHashMap.put(marker,i);
+            }
+
         }
     }
     /**
@@ -160,12 +163,15 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMapLongClickLi
         double minLon=posActual.longitude-tasa;
         ArrayList<DesperfectoActivity> l=new ArrayList<>();
         for(int i=0;i<listaDesperfectos.size();i++){
-            if(Double.valueOf(listaDesperfectos.get(i).getLatitud())<=maxLat &&
-                    Double.valueOf(listaDesperfectos.get(i).getLatitud())>=minLat&&
-                    Double.valueOf( listaDesperfectos.get(i).getLongitud())<=maxLon &&
-                    Double.valueOf( listaDesperfectos.get(i).getLongitud())>=minLon){
+            if(l.get(i).getLatitud()!=null && l.get(i).getLongitud()!=null){
+                if(Double.valueOf(listaDesperfectos.get(i).getLatitud())<=maxLat &&
+                        Double.valueOf(listaDesperfectos.get(i).getLatitud())>=minLat&&
+                        Double.valueOf( listaDesperfectos.get(i).getLongitud())<=maxLon &&
+                        Double.valueOf( listaDesperfectos.get(i).getLongitud())>=minLon){
                     l.add(listaDesperfectos.get(i));
+                }
             }
+
         }
         MarcarDesperfectos(l);
     }
