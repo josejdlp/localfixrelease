@@ -32,13 +32,10 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
+import java.util.ArrayList;
 
 public class Identificacion extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -46,8 +43,8 @@ public class Identificacion extends AppCompatActivity implements GoogleApiClient
     private static final int RC_SIGN_IN = 9001;
     private FirebaseAuth mAuth;
     private DatabaseReference myRef;
-    private String uid = "No hay UID";
-    private String currentUID = "";
+    private ArrayList<String> admins = new ArrayList<String>(); //Contiene todos los UID de admins
+    private String currentUID = ""; //UID del usuario actual
     private Boolean isAdmin = false;
 
     //Facebook
@@ -98,7 +95,7 @@ public class Identificacion extends AppCompatActivity implements GoogleApiClient
         });
         //--Facebook
 
-        uid = getIntent().getStringExtra("UIDAdmin");
+        admins = getIntent().getStringArrayListExtra("UIDAdmin");
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions
                 .DEFAULT_SIGN_IN)
@@ -137,23 +134,6 @@ public class Identificacion extends AppCompatActivity implements GoogleApiClient
         };
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
- /*       myRef = database.getReference("adm");
-
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                uid = "He entrado y no hay";
-                uid = dataSnapshot.getKey();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        Toast.makeText(this, uid, Toast.LENGTH_LONG).show();
-        */
 
         //Email&Password
         et_login_email = (EditText)findViewById(R.id.et_login_email);
@@ -232,10 +212,11 @@ public class Identificacion extends AppCompatActivity implements GoogleApiClient
 
         //Si es administrador y ya está logueado, se le manda a su vista directamente
         if (mAuth.getCurrentUser() != null) {
-            //Toast.makeText(Identificacion.this, mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
-            if (mAuth.getCurrentUser().getUid().equals(uid)) {
-                Intent i = new Intent(Identificacion.this, VistaAdministrador.class);
-                startActivity(i);
+            for (String uid:admins){
+                if(mAuth.getCurrentUser().getUid().equals(uid)){
+                    Intent i = new Intent(Identificacion.this, VistaAdministrador.class);
+                    startActivity(i);
+                }
             }
         }
 
@@ -326,9 +307,18 @@ public class Identificacion extends AppCompatActivity implements GoogleApiClient
                         if(task.isSuccessful()){
                             FirebaseUser user = mAuth.getCurrentUser();
                             currentUID = user.getUid();
-                            if (currentUID.equals(uid)){
+
+                            for (String uid:admins){
+                                if (currentUID.equals(uid)){
+                                    isAdmin = true;
+                                    break;
+                                }
+                            }
+                            /*
+                            if (currentUID.equals(admins)){
                                 isAdmin = true;
                             }
+                            */
                             updateUI(user);
                             openActivity();
                             finish();

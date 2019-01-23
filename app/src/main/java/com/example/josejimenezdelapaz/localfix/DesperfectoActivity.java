@@ -30,7 +30,7 @@ public class DesperfectoActivity implements Serializable {
         this.estado=estado;
         this.comentarios = comentarios;
         this.imagenes=imagenes;
-        this.estado = "No aceptado";
+        this.estado = "no admitido";
 
     }
 
