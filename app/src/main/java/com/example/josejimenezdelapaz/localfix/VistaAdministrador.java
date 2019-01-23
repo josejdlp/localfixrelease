@@ -40,6 +40,12 @@ public class VistaAdministrador extends AppCompatActivity {
     private String ESTADO_EN_REPARACION = "en reparacion";
     private String ESTADO_REPARADO = "reparado";
 
+    private int GRIS = 0xF0F8FF;
+    private int AZUL = 0x00FFFF;
+    private int NARANJA =0xFF7F50;
+    private int VERDE = 0x7FFFD4;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +82,7 @@ public class VistaAdministrador extends AppCompatActivity {
                 for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
                     desp=postSnapshot.getValue(DesperfectoActivity.class);
                     listaDesperfectos.add(desp);
+
                 }
                 cargarLista();
             }
@@ -91,15 +98,17 @@ public class VistaAdministrador extends AppCompatActivity {
         ArrayAdapter adaptator =
                 new ArrayAdapter(this, R.layout.desperfectoitemlayout, listaDesperfectos){
                     public View getView(final int position
-                            , View convertView
+                            , final View convertView
                             , ViewGroup parent){
                         LayoutInflater inflater = (LayoutInflater) getContext()
                                 .getSystemService(getContext().LAYOUT_INFLATER_SERVICE);
+
 
                         //Crear la vista para cada fila
                         View fila = inflater.inflate(R.layout.desperfectoitemlayout_admin, parent, false);
                         TextView tituloView = (TextView) fila.findViewById(R.id.tit_lista_desp_admin);
                         tituloView.setText(listaDesperfectos.get(position).getDescripcion());
+
 
                         //Localizar los botones
                         Button botonBorrar = (Button) fila.findViewById(R.id.borrar_lista_desp_admin);
