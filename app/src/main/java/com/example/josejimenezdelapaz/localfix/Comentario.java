@@ -1,5 +1,4 @@
 package com.example.josejimenezdelapaz.localfix;
-
 import java.io.Serializable;
 
 public class Comentario implements Serializable {

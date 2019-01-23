@@ -24,6 +24,7 @@ public class NuevoDesperfecto extends AppCompatActivity {
     private String direccion="";
     private String lat="";
     private String lon="";
+    private ArrayList<DesperfectoActivity> desperfectos=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +32,8 @@ public class NuevoDesperfecto extends AppCompatActivity {
         referenciaBBDD = FirebaseDatabase.getInstance().getReference("Desperfectos");
         ImageView IVimages;
         IVimages = (ImageView) findViewById(R.id.IV_images);
+        Bundle bundleObject=getIntent().getExtras();
+        desperfectos=(ArrayList<DesperfectoActivity>) bundleObject.getSerializable("desperfectos");
         IVimages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +60,9 @@ public class NuevoDesperfecto extends AppCompatActivity {
     private void irMapa(){
         Intent mapa = new Intent(this, Mapa.class);
         mapa.putExtra("EXTRA_MODALIDAD",0);//0 indica que es desde crear desperfecto
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("desperfectos",desperfectos);
+        mapa.putExtras(bundle);
         startActivityForResult(mapa,codeMapa);
     }
     public void btn_agregar_nuevo_desperfecto(View view){
