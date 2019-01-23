@@ -169,7 +169,6 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMapLongClickLi
         }
         MarcarDesperfectos(l);
     }
-
     @Override
     public boolean onMarkerClick(final Marker marker) {
 
@@ -178,8 +177,8 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMapLongClickLi
     }
     @Override
     public void onInfoWindowClick(Marker marker) {
-        if(modalidad==0){ //Si esta en nuevodesperfecto y hace click en la marca donde quiere ubicarlo
-            DevolverDireccion(direccion);
+       /* if(modalidad==0){ //Si esta en nuevodesperfecto y hace click en la marca donde quiere ubicarlo
+            //DevolverDireccion(direccion);
         }else if(modalidad==1){ //Esta viendo los desperfectos, acceder a la info completa:
             //Enviar el desperfecto seleccionado a la vista.
             int posicion=mHashMap.get(marker);
@@ -190,7 +189,16 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMapLongClickLi
             // visualizarDesperfecto.putExtra("EXTRA_IMAGENES", listaDesperfectos.get(position).getImagenes());
             startActivity(visualizarDesperfecto);
             //finish();
-        }
+        }*/
+        //Enviar el desperfecto seleccionado a la vista.
+        int posicion=mHashMap.get(marker);
+        Intent visualizarDesperfecto = new Intent (Mapa.this, VisualizarDesperfecto.class);
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("desperfecto",listaDesperfectos.get(posicion));
+        visualizarDesperfecto.putExtras(bundle);
+        // visualizarDesperfecto.putExtra("EXTRA_IMAGENES", listaDesperfectos.get(position).getImagenes());
+        startActivity(visualizarDesperfecto);
+        //finish();
 
     }
     @Override
@@ -203,7 +211,7 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMapLongClickLi
             lon=String.valueOf(latLng.longitude);
             marcaNuevoDesperfecto=mMap.addMarker(new MarkerOptions()
                     .position(latLng)
-                    .title("GUARDAR "+direccion));
+                    .title(direccion));
             //VISUALIZACION DEL MAPA PARA VER DESPERFECTOS
         }else  if(modalidad==1){
         }
