@@ -12,7 +12,7 @@ public class DesperfectoActivity implements Serializable {
     private String longitud;
     private String descripcion;
     private float gravedad;
-    private String estado;
+    private String estado; //No aceptado - Aceptado - En reparación - Reparado
     private ArrayList<Comentario> comentarios;
     private ArrayList<String> imagenes;//url de las imagenes del desperfecto
 
@@ -30,6 +30,7 @@ public class DesperfectoActivity implements Serializable {
         this.estado=estado;
         this.comentarios = comentarios;
         this.imagenes=imagenes;
+        this.estado = "No aceptado";
 
     }
 
