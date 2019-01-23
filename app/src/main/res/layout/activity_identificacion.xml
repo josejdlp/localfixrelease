@@ -8,7 +8,7 @@
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/btn_login_google"
-        android:layout_width="208dp"
+        android:layout_width="209dp"
         android:layout_height="39dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,20 +38,22 @@
         android:id="@+id/btn_login_facebook"
         android:layout_width="205dp"
         android:layout_height="27dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="52dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_signin_mailpass" />
 
     <Button
         android:id="@+id/btn_new_account"
-        android:layout_width="208dp"
-        android:layout_height="39dp"
+        android:layout_width="205dp"
+        android:layout_height="38dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/boton_redondo"
         android:text="@string/btn_new_account"
+        android:textColor="#ffff"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,13 +61,14 @@
 
     <Button
         android:id="@+id/btn_signin_mailpass"
-        android:layout_width="208dp"
-        android:layout_height="39dp"
+        android:layout_width="205dp"
+        android:layout_height="38dp"
 
-        android:layout_marginTop="24dp"
+        android:background="@drawable/boton_redondo"
         android:text="@string/btn_signin_emailpass"
+        android:textColor="#ffff"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_login_pass" />
 
@@ -113,7 +116,7 @@
     <ImageView
         android:id="@+id/iv_login"
         android:layout_width="wrap_content"
-        android:layout_height="175dp"
+        android:layout_height="140dp"
         android:layout_marginTop="55dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

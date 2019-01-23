@@ -1,6 +1,8 @@
 package com.example.josejimenezdelapaz.localfix;
+import android.content.ClipData;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
+
         //redireccionarUsuario();
 
         palabrasBusqueda.clear();
@@ -81,6 +84,11 @@ public class MainActivity extends AppCompatActivity {
         MOSTRAR_ADMITIDOS = getIntent().getBooleanExtra("ADMITIDOS", true);
         MOSTRAR_EN_REPARACION = getIntent().getBooleanExtra("EN_REPARACION", true);
         MOSTRAR_REPARADOS = getIntent().getBooleanExtra("REPARADOS", true);
+
+
+
+
+        invalidateOptionsMenu();
 
     }
 
@@ -258,9 +266,23 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_main, menu);
+
+
         return true;
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        FirebaseUser user = mAuth.getCurrentUser();
+        MenuItem settingsItem = menu.findItem(R.id.action_login);
+        if (user == null) {
+            // set your desired icon here based on a flag if you like
+            settingsItem.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_icon_login));
+        }else{
+            settingsItem.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_icon_logout));
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -278,6 +300,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent filtro = new Intent(MainActivity.this, Filtro.class);
                 startActivity(filtro);
                 break;
+            case R.id.action_login:
+
             default:
                 break;
         }

@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/action_settings"
-        android:title="Ajustes"
+        android:title="Acerca de Local Fix"
         android:icon="@drawable/ic_icon_settings_white"
         app:showAsAction="ifRoom"
         android:orderInCategory="300"
@@ -20,9 +20,18 @@
 
     <item
         android:id="@+id/action_filter"
-        android:icon="@drawable/ic_icon_filter"
-        android:orderInCategory="200"
         android:title="Filtrar"
-        app:showAsAction="ifRoom" />
+        android:icon="@drawable/ic_icon_filter"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="250"
+        />
 
+
+    <item
+        android:id="@+id/action_login"
+        android:title="Iniciar sesion"
+        android:icon="@drawable/ic_icon_login"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="200"
+        />
 </menu>

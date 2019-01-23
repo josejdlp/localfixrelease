@@ -18,20 +18,6 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_register"
         app:srcCompat="@drawable/logo_localfix" />
 
-    <EditText
-        android:id="@+id/et_new_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Introduzca nombre de usuario"
-        android:inputType="textPersonName"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_login" />
-
     <TextView
         android:id="@+id/tv_register"
         android:layout_width="wrap_content"
@@ -49,7 +35,7 @@
         android:id="@+id/et_new_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Introduzca correo electronico"
         android:inputType="textEmailAddress"
@@ -57,7 +43,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_new_name" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_login" />
 
     <EditText
         android:id="@+id/et_new_pass"
@@ -75,10 +61,12 @@
 
     <Button
         android:id="@+id/btn_register_new_user"
-        android:layout_width="wrap_content"
+        android:layout_width="154dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="Registrar"
+        android:background="@drawable/boton_redondo"
+        android:textColor="#FFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_new_pass" />
