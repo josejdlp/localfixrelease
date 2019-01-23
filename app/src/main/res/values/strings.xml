@@ -9,4 +9,5 @@
     <string name="btn_new_account">Registrarse</string>
     <string name="btn_signin_emailpass">Iniciar Sesion</string>
     <string name="facebook_app_id">357839571464909</string>
+    <string name="default_notification_channel_id" translatable="false">default_channel</string>
 </resources>
