@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,12 +34,14 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<DesperfectoActivity> listaDesperfectosMostrar = new ArrayList<DesperfectoActivity>(); //Lista con los desperfectos que se mostraran
     private DesperfectoActivity desp=new DesperfectoActivity();
 
+    private ArrayList<String> palabrasBusqueda = new ArrayList<String>();
+
     private DatabaseReference referenciaBBDD;
     private FirebaseAuth mAuth;
     private ArrayList<String> admins = new ArrayList<String>(); //Contiene los UID de los admins
 
-    private Boolean MOSTRAR_NO_ACEPTADOS = true;
-    private Boolean MOSTRAR_ACEPTDOS = true;
+    private Boolean MOSTRAR_NO_ADMITIDOS = true;
+    private Boolean MOSTRAR_ADMITIDOS = true;
     private Boolean MOSTRAR_EN_REPARACION = true;
     private Boolean MOSTRAR_REPARADOS = true;
 
@@ -66,6 +67,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
         //redireccionarUsuario();
+
+        palabrasBusqueda.clear();
+
+        if (getIntent().getStringExtra("Texto_Busqueda") != null) {
+            String palabras [] = getIntent().getStringExtra("Texto_Busqueda").split("\\s+");
+            for (String palabra : palabras) {
+                palabrasBusqueda.add(palabra);
+            }
+        }
+
+        MOSTRAR_NO_ADMITIDOS = getIntent().getBooleanExtra("NO_ADMITIDOS", true);
+        MOSTRAR_ADMITIDOS = getIntent().getBooleanExtra("ADMITIDOS", true);
+        MOSTRAR_EN_REPARACION = getIntent().getBooleanExtra("EN_REPARACION", true);
+        MOSTRAR_REPARADOS = getIntent().getBooleanExtra("REPARADOS", true);
+
     }
 
     private void redireccionarUsuario(){
@@ -115,14 +131,29 @@ public class MainActivity extends AppCompatActivity {
         ListView lista = (ListView) findViewById(R.id.lista);
         ArrayList<String> filtro = new ArrayList<String>();
 
-        if(MOSTRAR_NO_ACEPTADOS) filtro.add("No admitido");
-        if(MOSTRAR_ACEPTDOS) filtro.add("Admitido");
+        if(MOSTRAR_NO_ADMITIDOS) filtro.add("No admitido");
+        if(MOSTRAR_ADMITIDOS) filtro.add("Admitido");
         if(MOSTRAR_EN_REPARACION) filtro.add("En reparacion");
         if(MOSTRAR_REPARADOS) filtro.add("Reparado");
 
         listaDesperfectosMostrar.clear();
 
         for (DesperfectoActivity desperfecto:listaDesperfectos){
+            String estado = desperfecto.getEstado();
+            if (filtro.contains(estado)) {
+                if (!palabrasBusqueda.isEmpty()) {
+                    for (String palabra : palabrasBusqueda) {
+                        if (desperfecto.getTitulo().contains(palabra)) {
+                            listaDesperfectosMostrar.add(desperfecto);
+                        }
+                    }
+                } else {
+                    listaDesperfectosMostrar.add(desperfecto);
+                }
+            }
+        }
+
+        /*for (DesperfectoActivity desperfecto:listaDesperfectos){
             for (String estado:filtro){
                 if (estado.equals(desperfecto.getEstado())){
                     listaDesperfectosMostrar.add(desperfecto);
@@ -131,6 +162,16 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        for (String palabra: palabrasBusqueda){
+            for (DesperfectoActivity desperfecto: listaDesperfectosMostrar){
+                String palabrasTitulo[] = desperfecto.getTitulo().split("\\s+");
+                for (String palabraTitulo: palabrasTitulo){
+                    if(palabraTitulo.equals(palabra))
+                        busqueda.add(desperfecto);
+                }
+            }
+        }
+        */
         ArrayAdapter adaptator =
                 new ArrayAdapter(this, R.layout.desperfectoitemlayout, listaDesperfectosMostrar){
                     public View getView(int position
@@ -227,14 +268,15 @@ public class MainActivity extends AppCompatActivity {
 
         switch(res_id){
             case R.id.action_search:
-                Intent i = new Intent(MainActivity.this, Busqueda.class);
-                startActivity(i);
+                Intent busqueda = new Intent(MainActivity.this, Busqueda.class);
+                startActivity(busqueda);
                 break;
             case R.id.action_settings:
                 Toast.makeText(getApplicationContext(), "Boton Ajustes", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_filter:
-                Toast.makeText(getApplicationContext(), "Boton Filtrar", Toast.LENGTH_SHORT).show();
+                Intent filtro = new Intent(MainActivity.this, Filtro.class);
+                startActivity(filtro);
                 break;
             default:
                 break;

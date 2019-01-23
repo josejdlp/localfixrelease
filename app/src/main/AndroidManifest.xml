@@ -32,6 +32,7 @@
         <activity android:name=".UploadImages" />
         <activity android:name=".Identificacion" />
         <activity android:name=".RegistroUsuario" />
+        <activity android:name=".Filtro"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

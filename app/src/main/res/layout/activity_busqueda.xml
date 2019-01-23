@@ -26,6 +26,7 @@
         android:id="@+id/btn_buscar_vista_buscar"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
+        android:onClick="btn_buscar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
