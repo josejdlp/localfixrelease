@@ -87,13 +87,13 @@ public class Identificacion extends AppCompatActivity implements GoogleApiClient
             @Override
             public void onCancel() {
                 // Inicio de sesion cancelado
-                Toast.makeText(getApplicationContext(), "Login FB cancelado", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "LoginFacebook:canceled", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onError(FacebookException error) {
                 // Error en el inicio de sesion
-                Toast.makeText(getApplicationContext(), "Login FB Error", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "LoginFacebook:Error", Toast.LENGTH_LONG).show();
             }
         });
         //--Facebook
@@ -260,6 +260,10 @@ public class Identificacion extends AppCompatActivity implements GoogleApiClient
             findViewById(R.id.btn_login_facebook).setVisibility(View.GONE);
             findViewById(R.id.btn_new_account).setVisibility(View.GONE);
 
+            findViewById(R.id.et_login_email).setVisibility(View.GONE);
+            findViewById(R.id.et_login_pass).setVisibility(View.GONE);
+            findViewById(R.id.btn_signin_mailpass).setVisibility(View.GONE);
+
             findViewById(R.id.btn_logout).setVisibility(View.VISIBLE);
 
             //Toast.makeText(Identificacion.this, "Estás logueado desde: "+user.getEmail(), Toast.LENGTH_SHORT).show();
@@ -268,6 +272,10 @@ public class Identificacion extends AppCompatActivity implements GoogleApiClient
             findViewById(R.id.btn_login_google).setVisibility(View.VISIBLE);
             findViewById(R.id.btn_login_facebook).setVisibility(View.VISIBLE);
             findViewById(R.id.btn_new_account).setVisibility(View.VISIBLE);
+
+            findViewById(R.id.et_login_email).setVisibility(View.VISIBLE);
+            findViewById(R.id.et_login_pass).setVisibility(View.VISIBLE);
+            findViewById(R.id.btn_signin_mailpass).setVisibility(View.VISIBLE);
 
             findViewById(R.id.btn_logout).setVisibility(View.GONE);
         }

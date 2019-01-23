@@ -38,7 +38,7 @@
         android:id="@+id/btn_login_facebook"
         android:layout_width="205dp"
         android:layout_height="27dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="48dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
