@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">localfix</string>
+    <string name="app_name">Local Fix</string>
     <string name="st_nombre_desperfecto">Nombre Desperfecto</string>
     <string name="st_ubicacion">Ubicación</string>
     <string name="title_activity_subir_imagenes">SubirImagenes</string>
