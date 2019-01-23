@@ -208,9 +208,20 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int res_id = item.getItemId();
 
-        if(res_id == R.id.action_settings){
-            Toast.makeText(getApplicationContext(), "Settings Options", Toast.LENGTH_LONG).show();
+        switch(res_id){
+            case R.id.action_search:
+                Toast.makeText(getApplicationContext(), "Boton Buscar", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_settings:
+                Toast.makeText(getApplicationContext(), "Boton Ajustes", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_filter:
+                Toast.makeText(getApplicationContext(), "Boton Filtrar", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
         }
+        
         return true;
     }
 }
