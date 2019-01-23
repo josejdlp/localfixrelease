@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -36,6 +35,10 @@ public class VistaAdministrador extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     private GoogleSignInClient mGoogleSignInClient;
+
+    private String ESTADO_ADMITIDO = "admitido";
+    private String ESTADO_EN_REPARACION = "en reparacion";
+    private String ESTADO_REPARADO = "reparado";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,14 +101,40 @@ public class VistaAdministrador extends AppCompatActivity {
                         TextView tituloView = (TextView) fila.findViewById(R.id.tit_lista_desp_admin);
                         tituloView.setText(listaDesperfectos.get(position).getDescripcion());
 
-                        //Establecer comportamiento del botón
-                        Button boton = (Button) fila.findViewById(R.id.borrar_lista_desp_admin);
-                        boton.setOnClickListener(new View.OnClickListener() {
+                        //Localizar los botones
+                        Button botonBorrar = (Button) fila.findViewById(R.id.borrar_lista_desp_admin);
+                        Button botonAdmitir = (Button) fila.findViewById(R.id.admitir_lista_desp_admin);
+                        Button botonReparar = (Button) fila.findViewById(R.id.reparar_lista_desp_admin);
+                        Button botonFinalizar = (Button) fila.findViewById(R.id.finalizar_lista_desp_admin);
+
+                        //Asignar funcionalidad a los botones
+                        botonBorrar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v){
                                 referenciaBBDD.child(listaDesperfectos.get(position).getId()).removeValue();
                                 //Cuando se borra, no se refrescan las vistas, así que recargamos
                                 showListaDesperfectos();
+                            }
+                        });
+
+                        botonAdmitir.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                referenciaBBDD.child(listaDesperfectos.get(position).getId()).child("estado").setValue(ESTADO_ADMITIDO);
+                            }
+                        });
+
+                        botonReparar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                referenciaBBDD.child(listaDesperfectos.get(position).getId()).child("estado").setValue(ESTADO_EN_REPARACION);
+                            }
+                        });
+
+                        botonFinalizar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                referenciaBBDD.child(listaDesperfectos.get(position).getId()).child("estado").setValue(ESTADO_REPARADO);
                             }
                         });
 

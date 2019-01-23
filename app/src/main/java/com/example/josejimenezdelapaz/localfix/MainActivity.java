@@ -30,12 +30,23 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-   // private ArrayList<Desperfecto> desperfectos;
-    public ArrayList<DesperfectoActivity> listaDesperfectos=new ArrayList<DesperfectoActivity>();
-    private DatabaseReference referenciaBBDD;
+
+    public ArrayList<DesperfectoActivity> listaDesperfectos=new ArrayList<DesperfectoActivity>(); //Lista con todos los desperfectos
+    private ArrayList<DesperfectoActivity> listaDesperfectosMostrar = new ArrayList<DesperfectoActivity>(); //Lista con los desperfectos que se mostraran
     private DesperfectoActivity desp=new DesperfectoActivity();
+
+    private DatabaseReference referenciaBBDD;
     private FirebaseAuth mAuth;
-    private String UIDAdmin = "";
+    private ArrayList<String> admins = new ArrayList<String>(); //Contiene los UID de los admins
+
+    private Boolean MOSTRAR_NO_ACEPTADOS = true;
+    private Boolean MOSTRAR_ACEPTDOS = true;
+    private Boolean MOSTRAR_EN_REPARACION = true;
+    private Boolean MOSTRAR_REPARADOS = true;
+
+    private Boolean ORDENAR_POR_FECHA = false;
+    private Boolean ORDENAR_POR_VALORACION = false;
+    private Boolean ORDENAR_POR_COMENTARIOS = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
-
     }
 
     @Override
@@ -60,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void redireccionarUsuario(){
         if (mAuth.getCurrentUser()!= null) {
-            if (mAuth.getCurrentUser().getUid().equals(UIDAdmin)) {
+            if (mAuth.getCurrentUser().getUid().equals(admins)) {
                 Intent i = new Intent(MainActivity.this, VistaAdministrador.class);
                 startActivity(i);
             }
@@ -85,14 +95,15 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
 
-        //Se carga el UID del administrador
+        //Se cargan los UID de los admins
         referenciaBBDD = referenciaBBDD.getParent();
-        referenciaBBDD = referenciaBBDD.child("Admin");
+        referenciaBBDD = referenciaBBDD.child("Admins");
         referenciaBBDD.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                UIDAdmin = dataSnapshot.child("uid").getValue().toString();
-                //redireccionarUsuario();
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    admins.add(postSnapshot.child("uid").getValue().toString());
+                }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}
@@ -104,8 +115,26 @@ public class MainActivity extends AppCompatActivity {
         Log.i("2 TAMM","2 tamanno lista"+listaDesperfectos.size());
         // desperfectos = Desperfecto.populateDesperfectos();
 
+        ArrayList<String> filtro = new ArrayList<String>();
+
+        if(MOSTRAR_NO_ACEPTADOS) filtro.add("no aceptado");
+        if(MOSTRAR_ACEPTDOS) filtro.add("admitido");
+        if(MOSTRAR_EN_REPARACION) filtro.add("en reparacion");
+        if(MOSTRAR_REPARADOS) filtro.add("reparado");
+
+        listaDesperfectosMostrar.clear();
+
+        for (DesperfectoActivity desperfecto:listaDesperfectos){
+            for (String estado:filtro){
+                if (estado.equals(desperfecto.getEstado())){
+                    listaDesperfectosMostrar.add(desperfecto);
+                    break;
+                }
+            }
+        }
+
         ArrayAdapter adaptator =
-                new ArrayAdapter(this, R.layout.desperfectoitemlayout, listaDesperfectos){
+                new ArrayAdapter(this, R.layout.desperfectoitemlayout, listaDesperfectosMostrar){
                     public View getView(int position
                             ,View convertView
                             ,ViewGroup parent){
@@ -118,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
                         //TextView ubicacionView = (TextView) fila.findViewById(R.id.textUbicacion);
                         //Establecer valores que queremos que se muestren en los widgets
                         //iconoView.setImageResource(desperfectos.get(position).getIcono());
-                        tituloView.setText(listaDesperfectos.get(position).getDescripcion());
+                        tituloView.setText(listaDesperfectosMostrar.get(position).getDescripcion());
                         // ubicacionView.setText(listaDesperfectos.get(position).getUbicacion());
                         return fila;
                     }
@@ -134,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                         //Enviar el desperfecto seleccionado a la vista.
                         Intent visualizarDesperfecto = new Intent (MainActivity.this, VisualizarDesperfecto.class);
                         Bundle bundle=new Bundle();
-                        bundle.putSerializable("desperfecto",listaDesperfectos.get(position));
+                        bundle.putSerializable("desperfecto",listaDesperfectosMostrar.get(position));
                         visualizarDesperfecto.putExtras(bundle);
                         // visualizarDesperfecto.putExtra("EXTRA_IMAGENES", listaDesperfectos.get(position).getImagenes());
                         startActivity(visualizarDesperfecto);
@@ -163,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void bt_home(View view){
         Intent login = new Intent(this, Identificacion.class);
-        login.putExtra("UIDAdmin", UIDAdmin);
+        login.putStringArrayListExtra("UIDAdmin", admins);
         startActivity(login);
     }
 
@@ -185,19 +214,6 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this, "Función Filtrar", Toast.LENGTH_SHORT).show();
     }
 
-/*    @Override
-    protected void onStart(){
-        super.onStart();
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if(user != null){
-            Toast.makeText(getApplicationContext(), "User: "+user.getUid(), Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(getApplicationContext(), "No User", Toast.LENGTH_SHORT).show();
-        }
-    }
-    */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -211,9 +227,20 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int res_id = item.getItemId();
 
-        if(res_id == R.id.action_settings){
-            Toast.makeText(getApplicationContext(), "Settings Options", Toast.LENGTH_LONG).show();
+        switch(res_id){
+            case R.id.action_search:
+                Toast.makeText(getApplicationContext(), "Boton Buscar", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_settings:
+                Toast.makeText(getApplicationContext(), "Boton Ajustes", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_filter:
+                Toast.makeText(getApplicationContext(), "Boton Filtrar", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
         }
+        
         return true;
     }
 }

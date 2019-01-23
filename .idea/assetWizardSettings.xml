@@ -19,8 +19,9 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$USER_HOME$/Desktop/ic_settings_white_36dp.png" />
-                                      <entry key="outputName" value="ic_action_settings" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/icons8-filtro-relleno-32.png" />
+                                      <entry key="outputName" value="ic_icon_filter" />
+                                      <entry key="theme" value="HOLO_DARK" />
                                     </map>
                                   </option>
                                 </PersistentState>

@@ -48,10 +48,6 @@ public class RegistroUsuario extends AppCompatActivity {
             }
         });
 
-
-
-
-
     }
 
     private void startRegister() {
