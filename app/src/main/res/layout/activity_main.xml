@@ -30,6 +30,7 @@
         android:layout_height="65dp"
         android:layout_marginBottom="8dp"
         android:onClick="bt_buscar"
+        android:background="@drawable/boton_redondo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageButton5"
         app:layout_constraintHorizontal_bias="0.5"
@@ -42,6 +43,7 @@
         android:layout_height="65dp"
         android:layout_marginBottom="8dp"
         android:onClick="bt_mapa"
+        android:background="@drawable/boton_redondo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageButton6"
         app:layout_constraintHorizontal_bias="0.5"
@@ -54,11 +56,14 @@
         android:layout_height="65dp"
         android:layout_marginBottom="8dp"
         android:onClick="bt_home"
+        android:background="@drawable/boton_redondo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageButton7"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/imageButton5"
-        app:srcCompat="@mipmap/ic_home_foreground" />
+        app:srcCompat="@drawable/home_white"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"/>
 
     <ImageButton
         android:id="@+id/imageButton7"
@@ -66,6 +71,7 @@
         android:layout_height="65dp"
         android:layout_marginBottom="8dp"
         android:onClick="bt_nuevo"
+        android:background="@drawable/boton_redondo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageButton8"
         app:layout_constraintHorizontal_bias="0.5"
@@ -78,6 +84,7 @@
         android:layout_height="65dp"
         android:layout_marginBottom="8dp"
         android:onClick="bt_filtrar"
+        android:background="@drawable/boton_redondo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

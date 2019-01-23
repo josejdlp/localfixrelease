@@ -18,7 +18,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class RegistroUsuario extends AppCompatActivity {
 
-    private EditText mNameField;
     private EditText mEmailField;
     private EditText mPasswordField;
 
@@ -34,7 +33,7 @@ public class RegistroUsuario extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        mNameField = (EditText)findViewById(R.id.et_new_name);
+
         mEmailField = (EditText)findViewById(R.id.et_new_email);
         mPasswordField = (EditText)findViewById(R.id.et_new_pass);
         mRegisterButton = (Button)findViewById(R.id.btn_register_new_user);
@@ -51,11 +50,11 @@ public class RegistroUsuario extends AppCompatActivity {
     }
 
     private void startRegister() {
-        final String name = mNameField.getText().toString().trim();
+
         String email = mEmailField.getText().toString().trim();
         String password = mPasswordField.getText().toString().trim();
 
-        if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
+        if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
             mProgress.setMessage("Registrando, por favor espere...");
             mProgress.show();
 
