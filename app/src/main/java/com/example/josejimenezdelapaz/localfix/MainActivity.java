@@ -171,6 +171,9 @@ public class MainActivity extends AppCompatActivity {
          FirebaseUser user = mAuth.getCurrentUser();
         if(user!= null) {
             Intent nuevoDesperfecto = new Intent(this, NuevoDesperfecto.class);
+            Bundle bundle=new Bundle();
+            bundle.putSerializable("desperfectos",listaDesperfectos);
+            nuevoDesperfecto.putExtras(bundle);
             startActivity(nuevoDesperfecto);
         } else {
             Intent login = new Intent(this, Identificacion.class);

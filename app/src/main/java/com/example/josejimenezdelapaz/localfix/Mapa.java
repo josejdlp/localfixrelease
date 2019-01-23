@@ -78,14 +78,14 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMapLongClickLi
 
 
     }
-    private void cargarDesperfectosMapa(){
-        for(int i=0;i<listaDesperfectos.size();i++){
-            LatLng pos=new LatLng(Double.parseDouble(listaDesperfectos.get(i).getLatitud()),
-                    Double.parseDouble(listaDesperfectos.get(i).getLongitud()));
+    private void MarcarDesperfectos(ArrayList<DesperfectoActivity> l){
+        for(int i=0;i<l.size();i++){
+            LatLng pos=new LatLng(Double.parseDouble(l.get(i).getLatitud()),
+                    Double.parseDouble(l.get(i).getLongitud()));
 
             Marker marker = mMap.addMarker(new MarkerOptions()
                     .position(pos)
-                    .title(listaDesperfectos.get(i).getTitulo()));
+                    .title(l.get(i).getTitulo()));
             mHashMap.put(marker,i);
         }
     }
@@ -104,10 +104,10 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMapLongClickLi
         getLocationPermission();
         updateLocationUI();
 
-        getDeviceLocation();
+        getDeviceLocation();// si modalidad ==0-> esta en crear desp->cargar desp cercanos en el mapa
         if(modalidad==1){
-            //Cargar desperfectos en el mapa
-            cargarDesperfectosMapa();
+            //Esta en ver mapa->Cargar todos los desperfectos en el mapa
+            MarcarDesperfectos(listaDesperfectos);
         }
 
 
@@ -131,8 +131,11 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMapLongClickLi
                         if (task.isSuccessful()) {
                             // Set the map's camera position to the current location of the device.
                             mLastKnownLocation = (Location) task.getResult();
-                            //Marcar(mLastKnownLocation);
-                            verPosicionActual(mLastKnownLocation);
+                            //mLastKnownLocation->guarda la posicion actual del dispositivo
+                            if(modalidad==0){//en crear desperfecto
+                                LatLng actual=new LatLng(mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude());
+                                SeleccionDespCercanos(actual);
+                            }
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                     new LatLng(mLastKnownLocation.getLatitude(),
                                             mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
@@ -149,6 +152,24 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMapLongClickLi
             Log.e("Exception: %s", e.getMessage());
         }
     }
+    private void SeleccionDespCercanos(LatLng posActual){
+        double tasa=0.004;
+        double  maxLat=posActual.latitude+tasa;
+        double minLat=posActual.latitude-tasa;
+        double  maxLon=posActual.longitude+tasa;
+        double minLon=posActual.longitude-tasa;
+        ArrayList<DesperfectoActivity> l=new ArrayList<>();
+        for(int i=0;i<listaDesperfectos.size();i++){
+            if(Double.valueOf(listaDesperfectos.get(i).getLatitud())<=maxLat &&
+                    Double.valueOf(listaDesperfectos.get(i).getLatitud())>=minLat&&
+                    Double.valueOf( listaDesperfectos.get(i).getLongitud())<=maxLon &&
+                    Double.valueOf( listaDesperfectos.get(i).getLongitud())>=minLon){
+                    l.add(listaDesperfectos.get(i));
+            }
+        }
+        MarcarDesperfectos(l);
+    }
+
     @Override
     public boolean onMarkerClick(final Marker marker) {
 
@@ -176,6 +197,7 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMapLongClickLi
     public void onMapLongClick(LatLng latLng) {
         //SELECCIÓN DE UBICACIÓN DEL DESPERFECTO MODALIDAD=0
         if(modalidad==0){
+            mMap.clear();
             direccion=CargarDireccionDeCoordenadas(latLng);
             lat=String.valueOf(latLng.latitude);
             lon=String.valueOf(latLng.longitude);
@@ -219,13 +241,7 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMapLongClickLi
         }
         return direccion;
     }
-    private void verPosicionActual(Location location){
-        // Logic to handle location object
-        double latitude = location.getLatitude();
-        double longitude = location.getLongitude();
-      //  Toast toast = Toast.makeText(this, "LAT"+latitude+"LONG"+longitude, Toast.LENGTH_LONG);
-        //toast.show();
-    }
+
 
     private void getLocationPermission() {
         /*
