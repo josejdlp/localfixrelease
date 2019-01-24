@@ -136,8 +136,8 @@ public class VisualizarDesperfecto extends AppCompatActivity {
         //String id = FirebaseDatabase.getInstance().getReference().child("Desperfectos").child(desperfecto.getId()).child("comentarios").push().getKey();
         //Toast.makeText(VisualizarDesperfecto.this, id, Toast.LENGTH_LONG).show();
         Integer id = desperfecto.getComentarios().size();
-        Comentario nuevoComentario = new Comentario(FirebaseAuth.getInstance().getCurrentUser().getEmail()
-        ,texto.getText().toString());
+        Comentario nuevoComentario = new Comentario(texto.getText().toString(),
+                FirebaseAuth.getInstance().getCurrentUser().getEmail());
 
 
         FirebaseDatabase.getInstance().getReference("Desperfectos")
