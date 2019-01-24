@@ -39,7 +39,6 @@ public class DesperfectoActivity implements Serializable {
         return autor;
     }
 
-
     public float getGravedad() {
         return gravedad;
     }

@@ -161,25 +161,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        /*for (DesperfectoActivity desperfecto:listaDesperfectos){
-            for (String estado:filtro){
-                if (estado.equals(desperfecto.getEstado())){
-                    listaDesperfectosMostrar.add(desperfecto);
-                    break;
-                }
-            }
-        }
-
-        for (String palabra: palabrasBusqueda){
-            for (DesperfectoActivity desperfecto: listaDesperfectosMostrar){
-                String palabrasTitulo[] = desperfecto.getTitulo().split("\\s+");
-                for (String palabraTitulo: palabrasTitulo){
-                    if(palabraTitulo.equals(palabra))
-                        busqueda.add(desperfecto);
-                }
-            }
-        }
-        */
         ArrayAdapter adaptator =
                 new ArrayAdapter(this, R.layout.desperfectoitemlayout, listaDesperfectosMostrar){
                     public View getView(int position
@@ -199,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
                         return fila;
                     }
                 };
+
         lista.setAdapter(adaptator);
         lista.setOnItemClickListener(
                 new AdapterView.OnItemClickListener(){
@@ -238,9 +220,14 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
     public void bt_home(View view){
-        Intent login = new Intent(this, Identificacion.class);
-        login.putStringArrayListExtra("UIDAdmin", admins);
-        startActivity(login);
+        palabrasBusqueda.clear();
+        MOSTRAR_NO_ADMITIDOS = true;
+        MOSTRAR_ADMITIDOS = true;
+        MOSTRAR_EN_REPARACION =  true;
+        MOSTRAR_REPARADOS = true;
+
+        cargarLista();
+
     }
 
     public void bt_nuevo(View view){
