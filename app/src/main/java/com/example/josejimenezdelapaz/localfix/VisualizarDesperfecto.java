@@ -1,6 +1,7 @@
 package com.example.josejimenezdelapaz.localfix;
 
 import android.app.ActionBar;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -14,7 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -23,25 +28,44 @@ import java.util.ArrayList;
 
 public class VisualizarDesperfecto extends AppCompatActivity {
 
-    private String id;
+    private String idDesperfecto;
     private DesperfectoActivity desperfecto=new DesperfectoActivity();
     private int posImagen=0;
+
+    //Referencias a la BBDD
+    private DatabaseReference referenciaBBDD;
+    private FirebaseAuth mAuth;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar_desperfecto);
-        visualizarDesperfecto();
+
+        idDesperfecto = getIntent().getStringExtra("desperfecto");
+
+        referenciaBBDD = FirebaseDatabase.getInstance().getReference("Desperfectos").child(idDesperfecto);
+        mAuth = FirebaseAuth.getInstance();
 
         //Insertar un ListView dentro de un ScrollView requiere de inicializar
         //una serie de listeners para poder mostar la lista a tamaño completo y poder
         //navegar por la misma.
-        setScrollListView();
-        setListViewHeightBaseOnChildren();
 
 
-        
+        referenciaBBDD.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                desperfecto = dataSnapshot.getValue(DesperfectoActivity.class);
+                visualizarDesperfecto();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     private void setScrollListView(){
@@ -54,7 +78,6 @@ public class VisualizarDesperfecto extends AppCompatActivity {
             }
         });
     }
-
     private void setListViewHeightBaseOnChildren(){
         ListView comentarios = (ListView) findViewById(R.id.lv_coments);
         ListAdapter listAdapter = comentarios.getAdapter();
@@ -62,29 +85,21 @@ public class VisualizarDesperfecto extends AppCompatActivity {
         if (listAdapter == null)
             return;
 
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(comentarios.getWidth(), View.MeasureSpec.UNSPECIFIED);
-        int totalHeight = 0;
-        View view = null;
-        for (int i = 0; i < comentarios.getCount(); i++){
-            view = listAdapter.getView(i, view, comentarios);
-            if(i == 0)
-                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ActionBar.LayoutParams.WRAP_CONTENT));
-
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += view.getMeasuredHeight();
-        }
         ViewGroup.LayoutParams params = comentarios.getLayoutParams();
-        params.height = totalHeight + (comentarios.getDividerHeight() * (listAdapter.getCount() - 1));
+        params.height = 400;
         comentarios.setLayoutParams(params);
+
 
     }
 
     private void visualizarDesperfecto(){
+
+
         TextView titulo = (TextView) findViewById(R.id.tv_title);
         ImageView img=(ImageView) findViewById(R.id.iv_img);
-        Bundle bundleObject=getIntent().getExtras();
-        desperfecto=(DesperfectoActivity) bundleObject.getSerializable("desperfecto");
+
         titulo.setText(desperfecto.getTitulo());
+
         //CARGAR IMAGENES
         if(desperfecto.getImagenes()!=null){
             Picasso.with(this).load(desperfecto.getImagenes().get(0)).into(img);
@@ -97,6 +112,8 @@ public class VisualizarDesperfecto extends AppCompatActivity {
 
     public void cargarComentarios() {
 
+
+
         if (desperfecto.getComentarios().isEmpty())
             return;
 
@@ -107,21 +124,24 @@ public class VisualizarDesperfecto extends AppCompatActivity {
             public View getView(int position, View convertView, ViewGroup parent){
                 View view = super.getView(position, convertView, parent);
 
+                int tam = desperfecto.getComentarios().size() - 1;
+
                 ((TextView) view.findViewById(android.R.id.text1))
-                        .setText("Autor: " + desperfecto.getComentarios().get(position).getAutor());
+                        .setText("Autor: " + desperfecto.getComentarios().get(tam - position).getAutor());
                 ((TextView) view.findViewById(android.R.id.text2))
-                        .setText(desperfecto.getComentarios().get(position).getTexto());
+                        .setText(desperfecto.getComentarios().get(tam - position).getTexto());
 
                 return view;
             }
                                     }
         );
-
+        setScrollListView();
+        setListViewHeightBaseOnChildren();
     }
 
     public void btn_enviar(View view){
-        if (FirebaseAuth.getInstance().getCurrentUser() == null){
-            Toast.makeText(VisualizarDesperfecto.this, "No estás logueado!!", Toast.LENGTH_LONG).show();
+        if (mAuth.getCurrentUser() == null){
+            Toast.makeText(VisualizarDesperfecto.this, "¡No puedes comentar si no estás logueado!", Toast.LENGTH_LONG).show();
             return;
 
         }
@@ -129,28 +149,25 @@ public class VisualizarDesperfecto extends AppCompatActivity {
         TextView texto = (TextView) findViewById(R.id.et_escribir_comentario);
 
         if (texto.getText().toString().isEmpty()){
-            Toast.makeText(VisualizarDesperfecto.this, "Escribe algo!!", Toast.LENGTH_LONG).show();
+            Toast.makeText(VisualizarDesperfecto.this, "No se ha escrito nada", Toast.LENGTH_LONG).show();
             return;
         }
 
         //String id = FirebaseDatabase.getInstance().getReference().child("Desperfectos").child(desperfecto.getId()).child("comentarios").push().getKey();
         //Toast.makeText(VisualizarDesperfecto.this, id, Toast.LENGTH_LONG).show();
+
         Integer id = desperfecto.getComentarios().size();
         Comentario nuevoComentario = new Comentario(texto.getText().toString(),
-                FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                mAuth.getCurrentUser().getEmail());
 
 
-        FirebaseDatabase.getInstance().getReference("Desperfectos")
-                .child(desperfecto.getId())
-                .child("comentarios")
-                .child(id.toString())
-                .setValue(nuevoComentario);
+        referenciaBBDD.child("comentarios").child(id.toString()).setValue(nuevoComentario);
 
         desperfecto.getComentarios().add(nuevoComentario);
 
         texto.setText("");
         Toast.makeText(VisualizarDesperfecto.this, "Mensaje enviado con éxito", Toast.LENGTH_LONG).show();
-        cargarComentarios();
+        //cargarComentarios();
     }
 
     public void siguienteImagen(View view){

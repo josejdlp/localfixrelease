@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public ArrayList<DesperfectoActivity> listaDesperfectos=new ArrayList<DesperfectoActivity>(); //Lista con todos los desperfectos
-    private ArrayList<DesperfectoActivity> listaDesperfectosMostrar = new ArrayList<DesperfectoActivity>(); //Lista con los desperfectos que se mostraran
+    private ArrayList<DesperfectoActivity> listaDesperfectosMostrar = new ArrayList<DesperfectoActivity>(); //Lista con los desperfectos que se mostrarán
     private DesperfectoActivity desp=new DesperfectoActivity();
 
     private ArrayList<String> palabrasBusqueda = new ArrayList<String>();
@@ -191,10 +191,12 @@ public class MainActivity extends AppCompatActivity {
                             , long l){
                         //Enviar el desperfecto seleccionado a la vista.
                         Intent visualizarDesperfecto = new Intent (MainActivity.this, VisualizarDesperfecto.class);
-                        Bundle bundle=new Bundle();
-                        bundle.putSerializable("desperfecto",listaDesperfectos.get(position));
-                        visualizarDesperfecto.putExtras(bundle);
+                        //Bundle bundle=new Bundle();
+                        //bundle.putSerializable("desperfecto",listaDesperfectos.get(position));
+                        //visualizarDesperfecto.putExtras(bundle);
                         // visualizarDesperfecto.putExtra("EXTRA_IMAGENES", listaDesperfectos.get(position).getImagenes());
+
+                        visualizarDesperfecto.putExtra("desperfecto", listaDesperfectos.get(position).getId());
                         startActivity(visualizarDesperfecto);
                     }
                 }
