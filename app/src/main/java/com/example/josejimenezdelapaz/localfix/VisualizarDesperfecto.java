@@ -179,17 +179,18 @@ public class VisualizarDesperfecto extends AppCompatActivity {
             }else if(posImagen==desperfecto.getImagenes().size()-1){
                 posImagen=0;
                 Picasso.with(this).load(desperfecto.getImagenes().get(0)).into(img);
-
             }
         }
-
     }
+
     public void anteriorImagen(View view){
         if(desperfecto.getImagenes()!=null){
             ImageView img=(ImageView) findViewById(R.id.iv_img);
+
             if(posImagen>0){
                 posImagen--;
                 Picasso.with(this).load(desperfecto.getImagenes().get(posImagen)).into(img);
+
             }else if(posImagen==0){
                 posImagen=desperfecto.getImagenes().size()-1;
                 Picasso.with(this).load(desperfecto.getImagenes().get(posImagen)).into(img);
