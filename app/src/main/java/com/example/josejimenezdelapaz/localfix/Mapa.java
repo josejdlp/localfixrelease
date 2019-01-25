@@ -163,7 +163,7 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMapLongClickLi
         double minLon=posActual.longitude-tasa;
         ArrayList<DesperfectoActivity> l=new ArrayList<>();
         for(int i=0;i<listaDesperfectos.size();i++){
-            if(l.get(i).getLatitud()!=null && l.get(i).getLongitud()!=null){
+            if(!listaDesperfectos.get(i).getLatitud().isEmpty() && !listaDesperfectos.get(i).getLongitud().isEmpty()){
                 if(Double.valueOf(listaDesperfectos.get(i).getLatitud())<=maxLat &&
                         Double.valueOf(listaDesperfectos.get(i).getLatitud())>=minLat&&
                         Double.valueOf( listaDesperfectos.get(i).getLongitud())<=maxLon &&
