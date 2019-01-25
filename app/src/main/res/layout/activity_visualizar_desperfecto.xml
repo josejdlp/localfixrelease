@@ -43,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/boton_redondo"
+                android:onClick="siguienteImagen"
                 android:text="Siguiente imagen"
                 android:textColor="#ffff"
                 android:textStyle="bold" />
@@ -123,7 +124,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:selectAllOnFocus="false" />
 
             <Button
                 android:id="@+id/btn_enviar_comentario"

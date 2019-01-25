@@ -178,6 +178,12 @@ public class VisualizarDesperfecto extends AppCompatActivity {
     }
 
     public void btn_puntuar(View view){
+
+        if(mAuth.getCurrentUser() == null){
+            Toast.makeText(VisualizarDesperfecto.this, "No puedes puntuar si no estás logueado", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         RatingBar rb = (RatingBar) findViewById(R.id.Rb_gravedad);
         float puntuacion = rb.getRating();
         Boolean haVotado = false;
