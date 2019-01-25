@@ -41,11 +41,11 @@
                 android:id="@+id/btn_next_img"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="Siguiente imagen"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/boton_redondo"
+                android:text="Siguiente imagen"
                 android:textColor="#ffff"
-                />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_user"
@@ -68,16 +68,34 @@
 
             <RatingBar
                 android:id="@+id/Rb_gravedad"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="64dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:progressDrawable="@drawable/custom_ratingbar"
-                android:layout_gravity="center_horizontal"
+                android:progressDrawable="@drawable/custom_ratingbar" />
 
-                 />
+            <TextView
+                android:id="@+id/tv_gravedad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Valoracion media gravedad: "
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textStyle="bold|italic"
+                android:paddingTop="10dp"/>
+
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/boton_redondo"
+                android:text="Puntuar Gravedad"
+                android:textColor="#ffff"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_comentarios"
@@ -112,7 +130,8 @@
                 android:background="@drawable/boton_redondo"
                 android:onClick="btn_enviar"
                 android:text="Enviar Comentario"
-                android:textColor="#fff" />
+                android:textColor="#fff"
+                android:textStyle="bold" />
 
 
         </LinearLayout>

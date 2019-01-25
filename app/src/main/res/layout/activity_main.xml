@@ -30,21 +30,22 @@
         android:layout_height="65dp"
         android:layout_marginStart="3dp"
         android:layout_marginEnd="3dp"
+        android:layout_marginBottom="3dp"
         android:background="@drawable/boton_redondo"
         android:onClick="bt_mapa"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imgbtn_house"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lista"
-        app:srcCompat="@drawable/gps"
-        android:scaleType="fitCenter"
-        />
+        app:srcCompat="@drawable/gps" />
 
     <ImageButton
         android:id="@+id/imgbtn_house"
         android:layout_width="65dp"
         android:layout_height="65dp"
+        android:layout_marginBottom="3dp"
         android:adjustViewBounds="true"
         android:background="@drawable/boton_redondo"
         android:onClick="bt_home"
@@ -62,15 +63,16 @@
         android:layout_height="65dp"
         android:layout_marginStart="3dp"
         android:layout_marginEnd="3dp"
+        android:layout_marginBottom="3dp"
+        android:adjustViewBounds="true"
         android:background="@drawable/boton_redondo"
         android:onClick="bt_nuevo"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/imgbtn_house"
         app:layout_constraintTop_toBottomOf="@+id/lista"
-        app:srcCompat="@drawable/add"
-        android:scaleType="fitCenter"
-        android:adjustViewBounds="true"/>
+        app:srcCompat="@drawable/add" />
 
 </android.support.constraint.ConstraintLayout>

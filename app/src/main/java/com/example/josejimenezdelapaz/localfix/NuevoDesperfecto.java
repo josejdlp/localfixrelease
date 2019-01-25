@@ -1,6 +1,8 @@
 package com.example.josejimenezdelapaz.localfix;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -31,9 +33,19 @@ public class NuevoDesperfecto extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nuevo_desperfecto);
         referenciaBBDD = FirebaseDatabase.getInstance().getReference("Desperfectos");
-        ImageView IVimages;
+        ImageView IVimages, IVcamera;
         IVimages = (ImageView) findViewById(R.id.IV_images);
+        IVcamera = (ImageView) findViewById(R.id.IV_camera);
+
         Bundle bundleObject=getIntent().getExtras();
+
+        Resources res = getResources();
+        Drawable img_gallery = res.getDrawable(R.drawable.img_galeria);
+        IVimages.setImageDrawable(img_gallery);
+
+        img_gallery = res.getDrawable(R.drawable.img_camera);
+        IVcamera.setImageDrawable(img_gallery);
+
 
         desperfectos=(ArrayList<DesperfectoActivity>) bundleObject.getSerializable("desperfectos");
         IVimages.setOnClickListener(new View.OnClickListener() {
@@ -50,6 +62,7 @@ public class NuevoDesperfecto extends AppCompatActivity {
                     gravedad=rating;
             }
         });
+
 
         TextView selecMapa = (TextView) findViewById(R.id.tv_SelecMapa);
         selecMapa.setOnClickListener(new View.OnClickListener() {

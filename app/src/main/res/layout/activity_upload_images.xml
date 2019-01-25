@@ -18,8 +18,11 @@
         android:layout_marginTop="368dp"
         android:layout_marginEnd="133dp"
         android:layout_marginBottom="70dp"
+        android:background="@drawable/boton_redondo"
         android:onClick="volver"
-        android:text="Añadir imágenes" />
+        android:text="Guardar imágenes"
+        android:textColor="#ffff"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/main_heading"

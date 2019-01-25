@@ -51,7 +51,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".NuevoDesperfecto" />
-        <activity android:name=".Login" />
         <activity android:name=".VisualizarDesperfecto" />
         <activity android:name=".UploadImages" />
         <activity android:name=".Identificacion" />
