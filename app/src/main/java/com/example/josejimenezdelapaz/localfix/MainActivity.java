@@ -1,5 +1,4 @@
 package com.example.josejimenezdelapaz.localfix;
-import android.content.ClipData;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -33,11 +32,11 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
 
-    public ArrayList<DesperfectoActivity> listaDesperfectos=new ArrayList<DesperfectoActivity>(); //Lista con todos los desperfectos
-    private ArrayList<DesperfectoActivity> listaDesperfectosMostrar = new ArrayList<DesperfectoActivity>(); //Lista con los desperfectos que se mostrarán
-    private DesperfectoActivity desp=new DesperfectoActivity();
+    public ArrayList<Desperfecto> listaDesperfectos=new ArrayList<Desperfecto>(); //Lista con todos los desperfectos
+    private ArrayList<Desperfecto> listaDesperfectosMostrar = new ArrayList<Desperfecto>(); //Lista con los desperfectos que se mostrarán
+    private Desperfecto desp=new Desperfecto();
 
-    private ArrayList<String> palabrasBusqueda = new ArrayList<String>();
+    private ArrayList<String> palabrasBusqueda = new ArrayList<String>(); //Palabras usadas en búsquedas para filtrar
 
     private DatabaseReference referenciaBBDD;
     private FirebaseAuth mAuth;
@@ -74,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
 
-        //redireccionarUsuario();
 
         palabrasBusqueda.clear();
 
@@ -90,32 +88,22 @@ public class MainActivity extends AppCompatActivity {
         MOSTRAR_EN_REPARACION = getIntent().getBooleanExtra("EN_REPARACION", true);
         MOSTRAR_REPARADOS = getIntent().getBooleanExtra("REPARADOS", true);
 
-
-
-
         invalidateOptionsMenu();
 
     }
 
-    private void redireccionarUsuario(){
-        if (mAuth.getCurrentUser()!= null) {
-            if (mAuth.getCurrentUser().getUid().equals(admins)) {
-                Intent i = new Intent(MainActivity.this, VistaAdministrador.class);
-                startActivity(i);
-            }
-        }
-    }
 
     private void showListaDesperfectos(){
 
         //CARGAR AL INICIO LOS DATOS DE LA BD
         referenciaBBDD.addValueEventListener(new ValueEventListener() {
+
             // Se activa una vez con el estado inicial de los datos y nuevamente cada vez que estos se cambian.
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 listaDesperfectos.clear();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
-                    desp=postSnapshot.getValue(DesperfectoActivity.class);
+                    desp = postSnapshot.getValue(Desperfecto.class);
                     listaDesperfectos.add(desp);
                 }
                 cargarLista();
@@ -151,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
         listaDesperfectosMostrar.clear();
 
-        for (DesperfectoActivity desperfecto:listaDesperfectos){
+        for (Desperfecto desperfecto:listaDesperfectos){
             String estado = desperfecto.getEstado();
             if (filtro.contains(estado)) {
                 if (!palabrasBusqueda.isEmpty()) {
@@ -196,11 +184,6 @@ public class MainActivity extends AppCompatActivity {
                             , long l){
                         //Enviar el desperfecto seleccionado a la vista.
                         Intent visualizarDesperfecto = new Intent (MainActivity.this, VisualizarDesperfecto.class);
-                        //Bundle bundle=new Bundle();
-                        //bundle.putSerializable("desperfecto",listaDesperfectos.get(position));
-                        //visualizarDesperfecto.putExtras(bundle);
-                        // visualizarDesperfecto.putExtra("EXTRA_IMAGENES", listaDesperfectos.get(position).getImagenes());
-
                         visualizarDesperfecto.putExtra("desperfecto", listaDesperfectos.get(position).getId());
                         startActivity(visualizarDesperfecto);
                     }
@@ -210,22 +193,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void bt_mapa(View view){
        // Toast.makeText(MainActivity.this, "Función Mapa", Toast.LENGTH_SHORT).show();
-        Intent map=new Intent(this,Mapa.class);
+        Intent map = new Intent(MainActivity.this, Mapa.class);
         map.putExtra("EXTRA_MODALIDAD",1);
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putSerializable("desperfectos",listaDesperfectos);
         map.putExtras(bundle);
         startActivity(map);
     }
 
-    public void bt_buscar(View view){
-        Bundle bundle=new Bundle();
-        bundle.putSerializable("desperfectos",listaDesperfectos);
-
-        Intent i = new Intent(MainActivity.this, Busqueda.class);
-        i.putExtras(bundle);
-        startActivity(i);
-    }
     public void bt_home(View view){
         palabrasBusqueda.clear();
         MOSTRAR_NO_ADMITIDOS = true;
@@ -234,25 +209,19 @@ public class MainActivity extends AppCompatActivity {
         MOSTRAR_REPARADOS = true;
 
         cargarLista();
-
     }
 
     public void bt_nuevo(View view){
-         FirebaseUser user = mAuth.getCurrentUser();
-        if(user!= null) {
-            Intent nuevoDesperfecto = new Intent(this, NuevoDesperfecto.class);
+        if(mAuth.getCurrentUser()!= null) {
+            Intent nuevoDesperfecto = new Intent(MainActivity.this, NuevoDesperfecto.class);
             Bundle bundle=new Bundle();
-            bundle.putSerializable("desperfectos",listaDesperfectos);
+            bundle.putSerializable("desperfectos", listaDesperfectos);
             nuevoDesperfecto.putExtras(bundle);
             startActivity(nuevoDesperfecto);
         } else {
-            Intent login = new Intent(this, Identificacion.class);
+            Intent login = new Intent(MainActivity.this, Identificacion.class);
             startActivity(login);
         }
-    }
-
-    public void bt_filtrar(View view){
-        Toast.makeText(MainActivity.this, "Función Filtrar", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -260,7 +229,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_main, menu);
-
 
         return true;
     }
