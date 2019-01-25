@@ -15,9 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-//import com.facebook.AccessToken;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -60,11 +57,10 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         showListaDesperfectos();
 
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar_main);
-        setSupportActionBar(toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        setSupportActionBar (toolbar);
 
         FirebaseMessaging.getInstance().subscribeToTopic("notifications");
-        Toast.makeText(this, "Subscribed to Topic: Notifications", Toast.LENGTH_SHORT).show();
 
 
     }
@@ -192,7 +188,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void bt_mapa(View view){
-       // Toast.makeText(MainActivity.this, "Función Mapa", Toast.LENGTH_SHORT).show();
         Intent map = new Intent(MainActivity.this, Mapa.class);
         map.putExtra("EXTRA_MODALIDAD",1);
         Bundle bundle = new Bundle();
@@ -257,7 +252,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(busqueda);
                 break;
             case R.id.action_settings:
-                Toast.makeText(getApplicationContext(), "Boton Ajustes", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_filter:
                 Intent filtro = new Intent(MainActivity.this, Filtro.class);

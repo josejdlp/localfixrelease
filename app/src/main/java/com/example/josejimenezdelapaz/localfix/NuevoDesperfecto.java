@@ -114,7 +114,6 @@ public class NuevoDesperfecto extends AppCompatActivity {
         Desperfecto nuevo = new Desperfecto(id
                 , FirebaseAuth.getInstance().getCurrentUser().getEmail()
                 , titulo, lat, lon, descripcion
-                , gravedad
                 , "No admitido"
                 , new ArrayList<Comentario>()
                 , listaUrls

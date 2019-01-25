@@ -40,12 +40,6 @@ public class VistaAdministrador extends AppCompatActivity {
     private String ESTADO_EN_REPARACION = "En reparacion";
     private String ESTADO_REPARADO = "Reparado";
 
-    private int GRIS = 0xF0F8FF;
-    private int AZUL = 0x00FFFF;
-    private int NARANJA =0xFF7F50;
-    private int VERDE = 0x7FFFD4;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -158,6 +152,7 @@ public class VistaAdministrador extends AppCompatActivity {
 
                         return fila;
                     }
+
                 };
         lista.setAdapter(adaptator);
         lista.setOnItemClickListener(
@@ -165,9 +160,12 @@ public class VistaAdministrador extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView
                             ,View view
-                            ,int i
+                            ,int position
                             ,long l) {
-
+                        //Enviar el desperfecto seleccionado a la vista.
+                        Intent visualizarDesperfecto = new Intent (VistaAdministrador.this, VisualizarDesperfecto.class);
+                        visualizarDesperfecto.putExtra("desperfecto", listaDesperfectos.get(position).getId());
+                        startActivity(visualizarDesperfecto);
                     }
                 }
         );
@@ -177,15 +175,14 @@ public class VistaAdministrador extends AppCompatActivity {
     public void btn_salir(View view){
         mAuth.signOut();
 
-        mGoogleSignInClient.signOut().addOnCompleteListener(this,
+        mGoogleSignInClient.signOut();/*.addOnCompleteListener(this,
                 new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        //Toast.makeText(Identificacion.this, "FUERA DE AQUÍ", Toast.LENGTH_SHORT).show();
-                        //updateUI(null);
+
                     }
                 });
-
+*/
 
         Intent i = new Intent(VistaAdministrador.this, MainActivity.class);
         startActivity(i);

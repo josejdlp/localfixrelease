@@ -109,7 +109,7 @@ public class VisualizarDesperfecto extends AppCompatActivity {
         titulo.setText(desperfecto.getTitulo());
         usuario.setText("AUTOR: " + desperfecto.getAutor());
         descripcion.setText("DESCRIPCIÓN:" + desperfecto.getDescripcion());
-        gravedad.setText("GRAVEDAD: " + String.valueOf(desperfecto.getGravedad()));
+        gravedad.setText("GRAVEDAD: " + String.valueOf(desperfecto.calcularGravedad()));
 
         //CARGAR IMAGENES
         if(!desperfecto.getImagenes().isEmpty()){

@@ -62,11 +62,11 @@
                 android:id="@+id/tv_description"
                 android:layout_width="340dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:paddingTop="20dp"
-                android:text="El arbol lo ha partio un rayo, se ha caio y luego sa dao con el poste de la lu y ha salio fuego por to y to. Estoy cagao jelp me "
+                android:text="Descripción"
                 android:textAlignment="center"
-                android:textSize="18sp"
-                android:layout_gravity="center_horizontal"/>
+                android:textSize="18sp" />
 
             <RatingBar
                 android:id="@+id/Rb_gravedad"
