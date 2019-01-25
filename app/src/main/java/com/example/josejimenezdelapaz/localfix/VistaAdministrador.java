@@ -29,8 +29,8 @@ import java.util.ArrayList;
 
 public class VistaAdministrador extends AppCompatActivity {
 
-    private ArrayList<DesperfectoActivity> listaDesperfectos = new ArrayList<DesperfectoActivity>();
-    private DesperfectoActivity desp=new DesperfectoActivity();
+    private ArrayList<Desperfecto> listaDesperfectos = new ArrayList<Desperfecto>();
+    private Desperfecto desp=new Desperfecto();
     private DatabaseReference referenciaBBDD;
     private FirebaseAuth mAuth;
 
@@ -80,7 +80,7 @@ public class VistaAdministrador extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 listaDesperfectos.clear();
                 for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                    desp=postSnapshot.getValue(DesperfectoActivity.class);
+                    desp=postSnapshot.getValue(Desperfecto.class);
                     listaDesperfectos.add(desp);
 
                 }

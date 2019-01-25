@@ -55,7 +55,7 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMapLongClickLi
     private static final int LOCATION_REQUEST_CODE = 101;
 
     private int modalidad=-1; // 0-Selección Ubicación,1-Ver MAPA Desperfectos,
-    private ArrayList<DesperfectoActivity> listaDesperfectos=new ArrayList<DesperfectoActivity>();
+    private ArrayList<Desperfecto> listaDesperfectos=new ArrayList<Desperfecto>();
     private String direccion="";
     private Marker marcaNuevoDesperfecto;
     private String lat="";
@@ -68,7 +68,7 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMapLongClickLi
 
         modalidad=getIntent().getIntExtra("EXTRA_MODALIDAD",-1);
         Bundle bundleObject=getIntent().getExtras();
-        listaDesperfectos=(ArrayList<DesperfectoActivity>) bundleObject.getSerializable("desperfectos");
+        listaDesperfectos=(ArrayList<Desperfecto>) bundleObject.getSerializable("desperfectos");
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
          // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -78,7 +78,7 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMapLongClickLi
 
 
     }
-    private void MarcarDesperfectos(ArrayList<DesperfectoActivity> l){
+    private void MarcarDesperfectos(ArrayList<Desperfecto> l){
         for(int i=0;i<l.size();i++){
             if(l.get(i).getLatitud()!="" && l.get(i).getLongitud()!=""){
                 LatLng pos=new LatLng(Double.parseDouble(l.get(i).getLatitud()),
@@ -161,7 +161,7 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMapLongClickLi
         double minLat=posActual.latitude-tasa;
         double  maxLon=posActual.longitude+tasa;
         double minLon=posActual.longitude-tasa;
-        ArrayList<DesperfectoActivity> l=new ArrayList<>();
+        ArrayList<Desperfecto> l=new ArrayList<>();
         for(int i=0;i<listaDesperfectos.size();i++){
             if(l.get(i).getLatitud()!=null && l.get(i).getLongitud()!=null){
                 if(Double.valueOf(listaDesperfectos.get(i).getLatitud())<=maxLat &&

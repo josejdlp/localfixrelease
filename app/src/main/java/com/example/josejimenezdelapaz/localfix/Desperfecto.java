@@ -3,7 +3,7 @@ package com.example.josejimenezdelapaz.localfix;
 import java.util.ArrayList;
 import java.io.Serializable;
 
-public class DesperfectoActivity implements Serializable {
+public class Desperfecto implements Serializable {
 
     private String id;
     private String autor;
@@ -12,25 +12,30 @@ public class DesperfectoActivity implements Serializable {
     private String longitud;
     private String descripcion;
     private float gravedad;
+    private ArrayList<Valoracion> valoraciones = new ArrayList<Valoracion>(); //Lista de todas las valoraciones
     private String estado; //No aceptado - Aceptado - En reparación - Reparado
-    private ArrayList<Comentario> comentarios;
-    private ArrayList<String> imagenes;//url de las imagenes del desperfecto
+    private ArrayList<Comentario> comentarios = new ArrayList<Comentario>();
+    private ArrayList<String> imagenes = new ArrayList<String>();//url de las imagenes del desperfecto
 
-    public DesperfectoActivity(){};
-    public DesperfectoActivity(String id , String autor, String titulo,String latitud,String longitud ,String descripcion, float gravedad, String estado,ArrayList<Comentario> comentarios,
-                               ArrayList<String> imagenes){
+    public Desperfecto(){
+    };
+
+    public Desperfecto(String id, String autor, String titulo, String latitud, String longitud, String descripcion, float gravedad, String estado, ArrayList<Comentario> comentarios,
+                       ArrayList<String> imagenes, ArrayList<Valoracion> valoraciones){
 
         this.id=id;
         this.autor = autor;
-        this.titulo=titulo;
-        this.latitud=latitud;
-        this.longitud=longitud;
+        this.titulo = titulo;
+        this.latitud = latitud;
+        this.longitud = longitud;
         this.descripcion = descripcion;
         this.gravedad = gravedad;
-        this.estado=estado;
+        this.estado = estado;
         this.comentarios = comentarios;
-        this.imagenes=imagenes;
-        this.estado = "No admitido";
+        this.imagenes = imagenes;
+        this.valoraciones = valoraciones;
+
+        this.valoraciones.add (new Valoracion(autor, gravedad));
 
     }
 
@@ -73,5 +78,9 @@ public class DesperfectoActivity implements Serializable {
 
     public String getEstado() {
         return estado;
+    }
+
+    public ArrayList<Valoracion> getValoraciones(){
+        return valoraciones;
     }
 }

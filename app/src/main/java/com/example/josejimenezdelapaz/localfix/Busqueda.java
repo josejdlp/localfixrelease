@@ -16,8 +16,8 @@ import java.util.ArrayList;
 public class Busqueda extends AppCompatActivity {
 
     //private ArrayList<String> palabrasClave = new ArrayList<String>();
-    //private ArrayList<DesperfectoActivity> listaDesperfectos = new ArrayList<DesperfectoActivity>();
-    //private ArrayList<DesperfectoActivity> busqueda = new ArrayList<>();
+    //private ArrayList<Desperfecto> listaDesperfectos = new ArrayList<Desperfecto>();
+    //private ArrayList<Desperfecto> busqueda = new ArrayList<>();
 
     TextView busqueda;
     ImageButton buscar;
@@ -31,7 +31,7 @@ public class Busqueda extends AppCompatActivity {
         buscar = (ImageButton) findViewById(R.id.btn_buscar_vista_buscar);
 
         //Bundle bundleObject=getIntent().getExtras();
-        //listaDesperfectos=(ArrayList<DesperfectoActivity>) bundleObject.getSerializable("desperfectos");
+        //listaDesperfectos=(ArrayList<Desperfecto>) bundleObject.getSerializable("desperfectos");
 
         //cargarLista();
 
@@ -57,7 +57,7 @@ public class Busqueda extends AppCompatActivity {
         }
 
         for (String palabra: palabrasClave){
-            for (DesperfectoActivity desperfecto: listaDesperfectos){
+            for (Desperfecto desperfecto: listaDesperfectos){
                 String palabrasTitulo[] = desperfecto.getTitulo().split("\\s+");
                 for (String palabraTitulo: palabrasTitulo){
                     if(palabraTitulo.equals(palabra))

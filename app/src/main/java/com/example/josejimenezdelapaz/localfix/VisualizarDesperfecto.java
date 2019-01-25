@@ -1,6 +1,5 @@
 package com.example.josejimenezdelapaz.localfix;
 
-import android.app.ActionBar;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,14 +21,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-
 public class VisualizarDesperfecto extends AppCompatActivity {
 
     private String idDesperfecto;
-    private DesperfectoActivity desperfecto=new DesperfectoActivity();
+    private Desperfecto desperfecto=new Desperfecto();
     private int posImagen=0;
 
     //Referencias a la BBDD
@@ -55,7 +50,7 @@ public class VisualizarDesperfecto extends AppCompatActivity {
         referenciaBBDD.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                desperfecto = dataSnapshot.getValue(DesperfectoActivity.class);
+                desperfecto = dataSnapshot.getValue(Desperfecto.class);
                 visualizarDesperfecto();
 
             }
@@ -101,7 +96,7 @@ public class VisualizarDesperfecto extends AppCompatActivity {
         titulo.setText(desperfecto.getTitulo());
 
         //CARGAR IMAGENES
-        if(desperfecto.getImagenes()!=null){
+        if(!desperfecto.getImagenes().isEmpty()){
             Picasso.with(this).load(desperfecto.getImagenes().get(0)).into(img);
         }
 
@@ -112,17 +107,12 @@ public class VisualizarDesperfecto extends AppCompatActivity {
 
     public void cargarComentarios() {
 
-
-
-        if (desperfecto.getComentarios().isEmpty())
-            return;
-
         ListView listaComentarios = (ListView) findViewById(R.id.lv_coments);
 
         listaComentarios.setAdapter(new ArrayAdapter(this, android.R.layout.simple_list_item_2, android.R.id.text1, desperfecto.getComentarios()) {
             @Override
-            public View getView(int position, View convertView, ViewGroup parent){
-                View view = super.getView(position, convertView, parent);
+            public View getView(int position, View convertView, ViewGroup parent){ View view = super.getView(position, convertView, parent);
+
 
                 int tam = desperfecto.getComentarios().size() - 1;
 

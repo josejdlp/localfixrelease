@@ -1,13 +1,20 @@
 package com.example.josejimenezdelapaz.localfix;
 
-public class Puntuacion {
+import java.io.Serializable;
+
+public class Valoracion implements Serializable {
 
     private String uid;
     private float puntuacion;
 
-    public Puntuacion(){
+    public Valoracion(){
         uid = "";
         puntuacion = 0;
+    }
+
+    public Valoracion(String uid, float puntuacion){
+        this.uid = uid;
+        this.puntuacion = puntuacion;
     }
 
     public float getPuntuacion() {
