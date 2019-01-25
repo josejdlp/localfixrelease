@@ -35,7 +35,6 @@ public class Desperfecto implements Serializable {
         this.imagenes = imagenes;
         this.valoraciones = valoraciones;
 
-        this.valoraciones.add (new Valoracion(autor, gravedad));
 
     }
 
@@ -82,5 +81,16 @@ public class Desperfecto implements Serializable {
 
     public ArrayList<Valoracion> getValoraciones(){
         return valoraciones;
+    }
+
+    public float calcularGravedad(){
+
+        float valoracionTotal = 0;
+
+        for (Valoracion valoracion : valoraciones){
+            valoracionTotal += valoracion.getPuntuacion();
+        }
+
+        return valoracionTotal = valoracionTotal / valoraciones.size();
     }
 }

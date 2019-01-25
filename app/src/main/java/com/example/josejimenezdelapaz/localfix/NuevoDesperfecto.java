@@ -49,14 +49,6 @@ public class NuevoDesperfecto extends AppCompatActivity {
         img_gallery = res.getDrawable(R.drawable.img_camera);
         IVcamera.setImageDrawable(img_gallery);
 
-
-
-
-
-        //ImageView IVimages;
-        //IVimages = (ImageView) findViewById(R.id.IV_images);
-
-
         desperfectos = (ArrayList<Desperfecto>) bundleObject.getSerializable("desperfectos");
 
         IVimages.setOnClickListener(new View.OnClickListener() {
@@ -100,9 +92,22 @@ public class NuevoDesperfecto extends AppCompatActivity {
         TextView textTitulo = (TextView) findViewById(R.id.Tv_nombre);
         String titulo = textTitulo.getText().toString();
 
+        if (titulo.isEmpty()){
+            Toast.makeText(NuevoDesperfecto.this, "Debes escribir un título!!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         //Descripcion
         TextView textDescripcion = (TextView) findViewById(R.id.Tv_descripcion);
         String descripcion = textDescripcion.getText().toString();
+
+        if (descripcion.isEmpty()){
+            Toast.makeText(NuevoDesperfecto.this, "Indica una descripción del desperfecto", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        ArrayList<Valoracion> valoraciones = new ArrayList<Valoracion>();
+        valoraciones.add(new Valoracion(FirebaseAuth.getInstance().getCurrentUser().getUid(), gravedad));
 
         //Gravedad, en la variable gravedad
         String id = referenciaBBDD.push().getKey();
@@ -113,7 +118,7 @@ public class NuevoDesperfecto extends AppCompatActivity {
                 , "No admitido"
                 , new ArrayList<Comentario>()
                 , listaUrls
-                , new ArrayList<Valoracion>());
+                , valoraciones);
 
         referenciaBBDD.child(id).setValue(nuevo);
 

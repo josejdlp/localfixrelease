@@ -93,6 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/boton_redondo"
+                android:onClick="btn_puntuar"
                 android:text="Puntuar Gravedad"
                 android:textColor="#ffff"
                 android:textStyle="bold" />
