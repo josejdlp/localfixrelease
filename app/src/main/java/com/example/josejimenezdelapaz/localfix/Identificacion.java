@@ -78,7 +78,6 @@ public class Identificacion extends AppCompatActivity implements GoogleApiClient
             public void onSuccess(LoginResult loginResult) {
                 // Inicio de sesion correcto
                 handleFacebookAccessToken(loginResult.getAccessToken());
-                //goMainScreen();
             }
 
             @Override
@@ -124,16 +123,8 @@ public class Identificacion extends AppCompatActivity implements GoogleApiClient
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
 
-                if(user != null){
-                    //goMainScreen();
-                    Toast.makeText(getApplicationContext(), "User OK", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getApplicationContext(), "User Null", Toast.LENGTH_SHORT).show();
-                }
             }
         };
-
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         //Email&Password
         et_login_email = (EditText)findViewById(R.id.et_login_email);
@@ -247,8 +238,6 @@ public class Identificacion extends AppCompatActivity implements GoogleApiClient
 
             findViewById(R.id.btn_logout).setVisibility(View.VISIBLE);
 
-            //Toast.makeText(Identificacion.this, "Estás logueado desde: "+user.getEmail(), Toast.LENGTH_SHORT).show();
-
         } else {
             findViewById(R.id.btn_login_google).setVisibility(View.VISIBLE);
             findViewById(R.id.btn_login_facebook).setVisibility(View.VISIBLE);
@@ -276,15 +265,13 @@ public class Identificacion extends AppCompatActivity implements GoogleApiClient
         LoginManager.getInstance().logOut();
         //-Fb_logout
 
-        mGoogleSignInClient.signOut().addOnCompleteListener(this,
+        mGoogleSignInClient.signOut();/*.addOnCompleteListener(this,
                 new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        //Toast.makeText(Identificacion.this, "FUERA DE AQUÍ", Toast.LENGTH_SHORT).show();
-                        //updateUI(null);
                     }
-                });
-        Intent main = new Intent(this, MainActivity.class);
+                });*/
+        Intent main = new Intent(Identificacion.this, MainActivity.class);
         startActivity(main);
     }
 
@@ -300,7 +287,6 @@ public class Identificacion extends AppCompatActivity implements GoogleApiClient
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
             } catch(ApiException e){
-                Toast.makeText(Identificacion.this, e.toString(), Toast.LENGTH_SHORT).show();
                 updateUI(null);
             }
         }
@@ -316,19 +302,16 @@ public class Identificacion extends AppCompatActivity implements GoogleApiClient
                             FirebaseUser user = mAuth.getCurrentUser();
                             currentUID = user.getUid();
 
-                            for (String uid:admins){
-                                if (currentUID.equals(uid)){
-                                    isAdmin = true;
-                                    break;
+                            if(!admins.isEmpty()) {
+                                for (String uid : admins) {
+                                    if (currentUID.equals(uid)) {
+                                        isAdmin = true;
+                                        break;
+                                    }
                                 }
                             }
-                            /*
-                            if (currentUID.equals(admins)){
-                                isAdmin = true;
-                            }
-                            */
-                            updateUI(user);
                             openActivity();
+                            updateUI(user);
                             finish();
 
                         } else {
@@ -337,21 +320,6 @@ public class Identificacion extends AppCompatActivity implements GoogleApiClient
                         }
                     }
                 });
-
-
-/*        if(acct!= null) {
-
-            if (!isAdmin) {
-
-                Intent main = new Intent(this, MainActivity.class);
-                startActivity(main);
-            } else {
-                Intent actividadAdmin = new Intent(this, NuevoDesperfecto.class);
-                startActivity(actividadAdmin);
-                //Toast.makeText(Identificacion.this, "bbbbbbbbbbbbbb: "+ mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
-            }
-        }
-*/
     }
 
     @Override

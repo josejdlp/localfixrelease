@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +53,7 @@ public class VisualizarDesperfecto extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 desperfecto = dataSnapshot.getValue(Desperfecto.class);
                 visualizarDesperfecto();
+                actualizarPuntaciones();
 
             }
 
@@ -61,6 +63,14 @@ public class VisualizarDesperfecto extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void actualizarPuntaciones() {
+        TextView texto = (TextView) findViewById(R.id.tv_gravedad);
+        texto.setText("GRAVEDAD " + String.valueOf(desperfecto.calcularGravedad()));
+
+        RatingBar rt = (RatingBar)findViewById(R.id.Rb_gravedad);
+        rt.setRating(desperfecto.calcularGravedad());
     }
 
     private void setScrollListView(){
@@ -91,9 +101,15 @@ public class VisualizarDesperfecto extends AppCompatActivity {
 
 
         TextView titulo = (TextView) findViewById(R.id.tv_title);
-        ImageView img=(ImageView) findViewById(R.id.iv_img);
+        ImageView img = (ImageView) findViewById(R.id.iv_img);
+        TextView usuario = (TextView) findViewById(R.id.tv_user);
+        TextView descripcion = (TextView) findViewById(R.id.tv_description);
+        TextView gravedad = (TextView) findViewById(R.id.tv_gravedad);
 
         titulo.setText(desperfecto.getTitulo());
+        usuario.setText("AUTOR: " + desperfecto.getAutor());
+        descripcion.setText("DESCRIPCIÓN:" + desperfecto.getDescripcion());
+        gravedad.setText("GRAVEDAD: " + String.valueOf(desperfecto.calcularGravedad()));
 
         //CARGAR IMAGENES
         if(!desperfecto.getImagenes().isEmpty()){
@@ -111,7 +127,8 @@ public class VisualizarDesperfecto extends AppCompatActivity {
 
         listaComentarios.setAdapter(new ArrayAdapter(this, android.R.layout.simple_list_item_2, android.R.id.text1, desperfecto.getComentarios()) {
             @Override
-            public View getView(int position, View convertView, ViewGroup parent){ View view = super.getView(position, convertView, parent);
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
 
 
                 int tam = desperfecto.getComentarios().size() - 1;
@@ -153,11 +170,45 @@ public class VisualizarDesperfecto extends AppCompatActivity {
 
         referenciaBBDD.child("comentarios").child(id.toString()).setValue(nuevoComentario);
 
-        desperfecto.getComentarios().add(nuevoComentario);
+        //desperfecto.getComentarios().add(nuevoComentario);
 
         texto.setText("");
         Toast.makeText(VisualizarDesperfecto.this, "Mensaje enviado con éxito", Toast.LENGTH_LONG).show();
         //cargarComentarios();
+    }
+
+    public void btn_puntuar(View view){
+
+        if(mAuth.getCurrentUser() == null){
+            Toast.makeText(VisualizarDesperfecto.this, "No puedes puntuar si no estás logueado", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        RatingBar rb = (RatingBar) findViewById(R.id.Rb_gravedad);
+        float puntuacion = rb.getRating();
+        Boolean haVotado = false;
+
+        for (int i = 0; i < desperfecto.getValoraciones().size(); i++){
+            if (desperfecto.getValoraciones().get(i).getUid().equals(mAuth.getCurrentUser().getUid())){
+                haVotado = true;
+                referenciaBBDD.child("valoraciones").child(String.valueOf(i)).setValue(
+                        new Valoracion(mAuth.getCurrentUser().getUid(), puntuacion));
+                break;
+            }
+        }
+
+        if (!haVotado){
+            Valoracion nueva = new Valoracion(mAuth.getCurrentUser().getUid(), puntuacion);
+            referenciaBBDD.child("valoraciones")
+                    .child(String.valueOf(desperfecto.getValoraciones().size()))
+                    .setValue(nueva);
+        }
+
+
+
+        TextView tv_gravidad = (TextView) findViewById(R.id.tv_gravedad);
+        tv_gravidad.setText("GRAVEDAD: " + tv_gravidad.getText().toString());
+
     }
 
     public void siguienteImagen(View view){
@@ -177,7 +228,7 @@ public class VisualizarDesperfecto extends AppCompatActivity {
         if(desperfecto.getImagenes()!=null){
             ImageView img=(ImageView) findViewById(R.id.iv_img);
 
-            if(posImagen>0){
+            if(posImagen > 0){
                 posImagen--;
                 Picasso.with(this).load(desperfecto.getImagenes().get(posImagen)).into(img);
 

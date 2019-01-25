@@ -24,4 +24,6 @@ public class Valoracion implements Serializable {
     public String getUid() {
         return uid;
     }
+
+
 }

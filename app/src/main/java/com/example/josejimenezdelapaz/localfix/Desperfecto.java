@@ -11,41 +11,33 @@ public class Desperfecto implements Serializable {
     private String latitud;
     private String longitud;
     private String descripcion;
-    private float gravedad;
     private ArrayList<Valoracion> valoraciones = new ArrayList<Valoracion>(); //Lista de todas las valoraciones
     private String estado; //No aceptado - Aceptado - En reparación - Reparado
     private ArrayList<Comentario> comentarios = new ArrayList<Comentario>();
     private ArrayList<String> imagenes = new ArrayList<String>();//url de las imagenes del desperfecto
 
-    public Desperfecto(){
-    };
+    public Desperfecto(){};
 
-    public Desperfecto(String id, String autor, String titulo, String latitud, String longitud, String descripcion, float gravedad, String estado, ArrayList<Comentario> comentarios,
-                       ArrayList<String> imagenes, ArrayList<Valoracion> valoraciones){
+    public Desperfecto(String id, String autor
+            ,String titulo, String latitud, String longitud
+            ,String descripcion, String estado
+            ,ArrayList<Comentario> comentarios, ArrayList<String> imagenes, ArrayList<Valoracion> valoraciones){
 
-        this.id=id;
+        this.id = id;
         this.autor = autor;
         this.titulo = titulo;
         this.latitud = latitud;
         this.longitud = longitud;
         this.descripcion = descripcion;
-        this.gravedad = gravedad;
         this.estado = estado;
         this.comentarios = comentarios;
         this.imagenes = imagenes;
         this.valoraciones = valoraciones;
-
-        this.valoraciones.add (new Valoracion(autor, gravedad));
-
     }
 
 
     public String getAutor() {
         return autor;
-    }
-
-    public float getGravedad() {
-        return gravedad;
     }
 
     public ArrayList<Comentario> getComentarios() {
@@ -82,5 +74,16 @@ public class Desperfecto implements Serializable {
 
     public ArrayList<Valoracion> getValoraciones(){
         return valoraciones;
+    }
+
+    public float calcularGravedad(){
+
+        float valoracionTotal = 0;
+
+        for (Valoracion valoracion : valoraciones){
+            valoracionTotal += valoracion.getPuntuacion();
+        }
+
+        return valoracionTotal / valoraciones.size();
     }
 }
