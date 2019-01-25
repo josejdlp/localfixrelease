@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                         TextView tituloView = (TextView) fila.findViewById(R.id.textTitulo);
                         //TextView ubicacionView = (TextView) fila.findViewById(R.id.textUbicacion);
                         //Establecer valores que queremos que se muestren en los widgets
-                        //iconoView.setImageResource(desperfectos.get(position).getIcono());
+                        //iconoView.setImageResource(listaDesperfectosMostrar.get(position).getIcono());
                         tituloView.setText(listaDesperfectosMostrar.get(position).getTitulo());
                         // ubicacionView.setText(listaDesperfectos.get(position).getUbicacion());
                         return fila;
