@@ -25,6 +25,7 @@ public class NuevoDesperfecto extends AppCompatActivity {
     private String lat="";
     private String lon="";
     private ArrayList<DesperfectoActivity> desperfectos=new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +34,7 @@ public class NuevoDesperfecto extends AppCompatActivity {
         ImageView IVimages;
         IVimages = (ImageView) findViewById(R.id.IV_images);
         Bundle bundleObject=getIntent().getExtras();
+
         desperfectos=(ArrayList<DesperfectoActivity>) bundleObject.getSerializable("desperfectos");
         IVimages.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +83,7 @@ public class NuevoDesperfecto extends AppCompatActivity {
         comentarios.add( new Comentario("Me gusta", "sgm00040"));
         comentarios.add(new Comentario("No me gusta", "sgm00041"));
         comentarios.add(new Comentario("Arreglar!!!!", "sgm00042"));
+
         ArrayList<String> imagenes=new ArrayList<>();
         //Gravedad, en la variable gravedad
         String id = referenciaBBDD.push().getKey();

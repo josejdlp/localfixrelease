@@ -79,10 +79,40 @@
 
                  />
 
+            <TextView
+                android:id="@+id/tv_comentarios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Comentarios:" />
+
             <ListView
                 android:id="@+id/lv_coments"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent" >
+
+            </ListView>
+
+            <TextView
+                android:id="@+id/tv_escribir_comentario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Escribe tu comentario: " />
+
+            <EditText
+                android:id="@+id/et_escribir_comentario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/btn_enviar_comentario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/boton_redondo"
+                android:onClick="btn_enviar"
+                android:text="Enviar Comentario"
+                android:textColor="#fff" />
 
 
         </LinearLayout>
