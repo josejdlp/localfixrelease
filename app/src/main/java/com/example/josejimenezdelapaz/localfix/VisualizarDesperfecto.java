@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -47,6 +48,12 @@ public class VisualizarDesperfecto extends AppCompatActivity {
         //una serie de listeners para poder mostar la lista a tamaño completo y poder
         //navegar por la misma.
 
+
+        int ancho = ViewGroup.LayoutParams.MATCH_PARENT;
+        int alto = 500;
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ancho, alto);
+        ImageView im = (ImageView) findViewById(R.id.iv_img);
+        im.setLayoutParams(params);
 
         referenciaBBDD.addValueEventListener(new ValueEventListener() {
             @Override
