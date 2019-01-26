@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -74,7 +76,7 @@ public class VistaAdministrador extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 listaDesperfectos.clear();
                 for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                    desp=postSnapshot.getValue(Desperfecto.class);
+                    desp = postSnapshot.getValue(Desperfecto.class);
                     listaDesperfectos.add(desp);
 
                 }
@@ -100,11 +102,26 @@ public class VistaAdministrador extends AppCompatActivity {
 
                         //Crear la vista para cada fila
                         final View fila = inflater.inflate(R.layout.desperfectoitemlayout_admin, parent, false);
-                        TextView tituloView = (TextView) fila.findViewById(R.id.tit_lista_desp_admin);
-                        tituloView.setText(listaDesperfectos.get(position).getDescripcion());
 
+                        //TÍTULO
+                        TextView tituloView = (TextView) fila.findViewById(R.id.tit_lista_desp_admin);
+                        tituloView.setText(listaDesperfectos.get(position).getTitulo());
+
+                        //UBICACION
+                        TextView ubicacionView = (TextView) fila.findViewById(R.id.ubi_lista_desp_admin);
+                        ubicacionView.setText(listaDesperfectos.get(position).getDireccion());
+
+                        //ESTADO
                         TextView estado = (TextView) fila.findViewById(R.id.estado_lista_desp_admin);
                         estado.setText(listaDesperfectos.get(position).getEstado());
+
+                        //IMAGEN
+                        ImageView iv = (ImageView) fila.findViewById(R.id.img_lista_desp_admin);
+
+                        if (!listaDesperfectos.get(position).getImagenes().isEmpty()){
+                            Picasso.with(getApplicationContext()).load(listaDesperfectos.get(position)
+                            .getImagenes().get(0)).into(iv);
+                        }
 
                         //Localizar los botones
                         Button botonBorrar = (Button) fila.findViewById(R.id.borrar_lista_desp_admin);
@@ -155,6 +172,7 @@ public class VistaAdministrador extends AppCompatActivity {
 
                 };
         lista.setAdapter(adaptator);
+
         lista.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
