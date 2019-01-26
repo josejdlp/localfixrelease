@@ -95,9 +95,6 @@ public class MainActivity extends AppCompatActivity {
         MOSTRAR_EN_REPARACION = getIntent().getBooleanExtra("en_reparacion", true);
         MOSTRAR_REPARADOS = getIntent().getBooleanExtra("reparados", true);
 
-        if (MOSTRAR_ADMITIDOS)
-            Toast.makeText(MainActivity.this, "MOSTRAR_ADMITIDOS", Toast.LENGTH_LONG).show();
-
         ORDENAR_POR_FECHA = getIntent().getBooleanExtra("fecha", true);
         ORDENAR_POR_COMENTARIOS = getIntent().getBooleanExtra("comentarios", false);
         ORDENAR_POR_VALORACION = getIntent().getBooleanExtra("gravedad", false);
