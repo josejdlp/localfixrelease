@@ -101,12 +101,13 @@ public class NuevoDesperfecto extends AppCompatActivity {
                     try{
                         photoFile = createImageFile();
                     }catch (Exception e){
-                        Log.i("ERROR", "No se ha podido crear el archivo");
+                        Log.i("Mensaje", "No se ha podido crear el archivo");
                     }
                     if(photoFile != null){
                         Uri photoURI = FileProvider.getUriForFile(NuevoDesperfecto.this,
                                 "com.example.android.fileprovider",
                                 photoFile);
+                        Log.i("Mensaje_PhotoURI", photoURI.toString());
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                         startActivityForResult(takePictureIntent, codeCamera);
                     }
@@ -220,7 +221,8 @@ public class NuevoDesperfecto extends AppCompatActivity {
 
         } else if (requestCode == codeCamera && resultCode==RESULT_OK){
             super.onActivityResult(requestCode, resultCode, data);
-            listaUrls.add(mCurrentPhotoPath);
+            Log.i("Mensaje_OnResult", "Vamos a funcion galleryAddPic");
+            galleryAddPic();
 
         }
 
@@ -251,6 +253,7 @@ public class NuevoDesperfecto extends AppCompatActivity {
     }
 
     private void galleryAddPic() {
+        Log.i("Mensaje_ToGallery", "Vamos a guardar en galeria");
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         File f = new File(mCurrentPhotoPath);
         Uri contentUri = Uri.fromFile(f);
