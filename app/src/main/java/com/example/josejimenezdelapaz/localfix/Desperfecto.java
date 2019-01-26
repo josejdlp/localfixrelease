@@ -15,13 +15,13 @@ public class Desperfecto implements Serializable {
     private String estado; //No aceptado - Aceptado - En reparación - Reparado
     private ArrayList<Comentario> comentarios = new ArrayList<Comentario>();
     private ArrayList<String> imagenes = new ArrayList<String>();//url de las imagenes del desperfecto
-
+    private String direccion;
     public Desperfecto(){};
 
     public Desperfecto(String id, String autor
             ,String titulo, String latitud, String longitud
             ,String descripcion, String estado
-            ,ArrayList<Comentario> comentarios, ArrayList<String> imagenes, ArrayList<Valoracion> valoraciones){
+            ,ArrayList<Comentario> comentarios, ArrayList<String> imagenes, ArrayList<Valoracion> valoraciones,String direc){
 
         this.id = id;
         this.autor = autor;
@@ -33,6 +33,7 @@ public class Desperfecto implements Serializable {
         this.comentarios = comentarios;
         this.imagenes = imagenes;
         this.valoraciones = valoraciones;
+        this.direccion=direc;
     }
 
 
@@ -85,5 +86,9 @@ public class Desperfecto implements Serializable {
         }
 
         return valoracionTotal / valoraciones.size();
+    }
+
+    public String getDireccion() {
+        return direccion;
     }
 }

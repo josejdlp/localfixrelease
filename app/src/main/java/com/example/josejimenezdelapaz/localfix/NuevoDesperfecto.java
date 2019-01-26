@@ -122,7 +122,8 @@ public class NuevoDesperfecto extends AppCompatActivity {
                 , "No admitido"
                 , new ArrayList<Comentario>()
                 , listaUrls
-                , valoraciones);
+                , valoraciones,
+                direccion);
 
         referenciaBBDD.child(id).setValue(nuevo);
 
