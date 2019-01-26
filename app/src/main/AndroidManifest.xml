@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
 
     <application
@@ -20,8 +21,9 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <!--Notificaciones-->
-        <service android:name=".MyFirebaseMessagingService"
+        <!-- Notificaciones -->
+        <service
+            android:name=".MyFirebaseMessagingService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -32,8 +34,10 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/logo_localfix" />
-        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <!--
+             Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
@@ -42,7 +46,7 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
-        <!-- Final notificaciones-->
+        <!-- Final notificaciones -->
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -56,7 +60,7 @@
         <activity android:name=".UploadImages" />
         <activity android:name=".Identificacion" />
         <activity android:name=".RegistroUsuario" />
-        <activity android:name=".Filtro"/>
+        <activity android:name=".Filtro" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -66,7 +70,9 @@
             android:name=".Mapa"
             android:label="@string/title_activity_mapa" />
         <activity android:name=".VistaAdministrador" />
-        <activity android:name=".Busqueda"></activity>
+        <activity android:name=".Busqueda" />
+        <activity android:name=".CameraView"></activity>
+        <activity android:name=".CameraActivity"></activity>
     </application>
 
 </manifest>

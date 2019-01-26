@@ -2,6 +2,7 @@ package com.example.josejimenezdelapaz.localfix;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Camera;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +29,11 @@ public class NuevoDesperfecto extends AppCompatActivity {
     private String lat = "";
     private String lon = "";
     private ArrayList<Desperfecto> desperfectos = new ArrayList<>();
+
+    //Camara
+    private Camera mCamera = null;
+    private CameraView mCameraView = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +62,13 @@ public class NuevoDesperfecto extends AppCompatActivity {
             public void onClick(View view) {
                 Intent images = new Intent(NuevoDesperfecto.this, UploadImages.class);
                 startActivityForResult(images, code);
+            }
+        });
+
+        IVcamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
