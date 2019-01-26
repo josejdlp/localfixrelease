@@ -70,6 +70,8 @@ public class VisualizarDesperfecto extends AppCompatActivity {
             }
         });
 
+
+
     }
 
     private void actualizarPuntaciones() {
