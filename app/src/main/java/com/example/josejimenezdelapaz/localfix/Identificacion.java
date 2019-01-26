@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -35,6 +36,8 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class Identificacion extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
@@ -46,6 +49,8 @@ public class Identificacion extends AppCompatActivity implements GoogleApiClient
     private ArrayList<String> admins = new ArrayList<String>(); //Contiene todos los UID de admins
     private String currentUID = ""; //UID del usuario actual
     private Boolean isAdmin = false;
+    private TextView tv_title = null;
+    private TextView tv_loged_account = null;
 
     //Facebook
     private LoginButton fb_loginButton;
@@ -65,6 +70,9 @@ public class Identificacion extends AppCompatActivity implements GoogleApiClient
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identificacion);
+
+        tv_title = (TextView)findViewById(R.id.tv_signin_main);
+        tv_loged_account = (TextView)findViewById(R.id.tv_account2);
 
         //Facebook
         fb_callbackManager = CallbackManager.Factory.create();
@@ -228,6 +236,7 @@ public class Identificacion extends AppCompatActivity implements GoogleApiClient
     private void updateUI(FirebaseUser user){
 
         if(user != null){
+            //Vista logeado
             findViewById(R.id.btn_login_google).setVisibility(View.GONE);
             findViewById(R.id.btn_login_facebook).setVisibility(View.GONE);
             findViewById(R.id.btn_new_account).setVisibility(View.GONE);
@@ -238,7 +247,15 @@ public class Identificacion extends AppCompatActivity implements GoogleApiClient
 
             findViewById(R.id.btn_logout).setVisibility(View.VISIBLE);
 
+            findViewById(R.id.tv_account1).setVisibility(View.VISIBLE);
+            findViewById(R.id.tv_account2).setVisibility(View.VISIBLE);
+
+
+            tv_title.setText("Cerrar Sesión");
+            tv_loged_account.setText(user.getEmail());
+
         } else {
+            //Vista sin logear
             findViewById(R.id.btn_login_google).setVisibility(View.VISIBLE);
             findViewById(R.id.btn_login_facebook).setVisibility(View.VISIBLE);
             findViewById(R.id.btn_new_account).setVisibility(View.VISIBLE);
@@ -248,6 +265,11 @@ public class Identificacion extends AppCompatActivity implements GoogleApiClient
             findViewById(R.id.btn_signin_mailpass).setVisibility(View.VISIBLE);
 
             findViewById(R.id.btn_logout).setVisibility(View.GONE);
+
+            findViewById(R.id.tv_account1).setVisibility(View.GONE);
+            findViewById(R.id.tv_account2).setVisibility(View.GONE);
+
+            tv_title.setText("Iniciar Sesión");
         }
     }
 

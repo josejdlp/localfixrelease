@@ -301,8 +301,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent busqueda = new Intent(MainActivity.this, Busqueda.class);
                 startActivity(busqueda);
                 break;
-            case R.id.action_settings:
-                break;
             case R.id.action_filter:
                 Intent filtro = new Intent(MainActivity.this, Filtro.class);
                 startActivity(filtro);
@@ -311,6 +309,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent login = new Intent(this, Identificacion.class);
                 login.putStringArrayListExtra("UIDAdmin", admins);
                 startActivity(login);
+                break;
+            case R.id.action_about:
+                Intent about = new Intent(this, About.class);
+                startActivity(about);
                 break;
             default:
                 break;

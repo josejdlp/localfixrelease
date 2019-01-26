@@ -24,15 +24,18 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/boton_redondo"
         android:onClick="btn_logout"
         android:text="@string/btn_logOut"
+        android:textColor="#ffff"
+        android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.856" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_account2"
+        app:layout_constraintVertical_bias="0.163" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/btn_login_facebook"
@@ -125,5 +128,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_signin_main"
         app:srcCompat="@drawable/logo_localfix" />
+
+    <TextView
+        android:id="@+id/tv_account1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Estas conectado con la cuenta:"
+        app:layout_constraintEnd_toStartOf="@+id/et_login_email"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/et_login_email"
+        app:layout_constraintTop_toBottomOf="@+id/iv_login" />
+
+    <TextView
+        android:id="@+id/tv_account2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="correo"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toStartOf="@+id/et_login_pass"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/et_login_pass"
+        app:layout_constraintTop_toBottomOf="@+id/tv_account1" />
 
 </android.support.constraint.ConstraintLayout>
