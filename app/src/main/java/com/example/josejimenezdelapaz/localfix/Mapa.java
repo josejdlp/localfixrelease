@@ -211,7 +211,6 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMapLongClickLi
            startActivity(visualizarDesperfecto);
            //finish();
        }
-
     }
     @Override
     public void onMapLongClick(LatLng latLng) {
@@ -233,7 +232,6 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMapLongClickLi
             marcaNuevoDesperfecto=mMap.addMarker(new MarkerOptions()
                     .position(latLng)
                     .title(direccion));*/
-
         }
     }
     private void DevolverDireccion(String direccion){

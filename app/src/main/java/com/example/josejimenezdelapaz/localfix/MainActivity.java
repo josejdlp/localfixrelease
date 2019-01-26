@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -160,12 +162,19 @@ public class MainActivity extends AppCompatActivity {
 
                         //Crear la vista para cada fila
                         View fila = inflater.inflate(R.layout.desperfectoitemlayout, parent, false);
+                        //TITULO
                         TextView tituloView = (TextView) fila.findViewById(R.id.textTitulo);
-                        //TextView ubicacionView = (TextView) fila.findViewById(R.id.textUbicacion);
-                        //Establecer valores que queremos que se muestren en los widgets
-                        //iconoView.setImageResource(listaDesperfectosMostrar.get(position).getIcono());
                         tituloView.setText(listaDesperfectosMostrar.get(position).getTitulo());
-                        // ubicacionView.setText(listaDesperfectos.get(position).getUbicacion());
+                        //UBICACIÓN
+                        TextView ubicacionView = (TextView) fila.findViewById(R.id.textUbicacion);
+                        ubicacionView.setText(listaDesperfectos.get(position).getDireccion());
+                        //Imagen
+                        ImageView iv=(ImageView) fila.findViewById(R.id.imgIcono);
+
+                        if(!listaDesperfectos.get(position).getImagenes().isEmpty()){
+                            Picasso.with(getApplicationContext()).load(listaDesperfectos.get(position).getImagenes().get(0)).into(iv);
+                        }
+
                         return fila;
                     }
                 };
