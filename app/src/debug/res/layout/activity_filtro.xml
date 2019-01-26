@@ -35,11 +35,11 @@
             android:layout_height="wrap_content"
             android:text="En reparacion" />
 
-        <CheckBox
-            android:id="@+id/cb_reparados"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Reparados" />
+    <CheckBox
+        android:id="@+id/cb_repara"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reparados" />
 
         <TextView
             android:id="@+id/tv_ordenar"

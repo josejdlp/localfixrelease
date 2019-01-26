@@ -1,5 +1,7 @@
 package com.example.josejimenezdelapaz.localfix;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +34,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.stream.Collectors;
+
+import static android.graphics.Color.rgb;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -89,13 +93,17 @@ public class MainActivity extends AppCompatActivity {
         MOSTRAR_NO_ADMITIDOS = getIntent().getBooleanExtra("no_admitidos", true);
         MOSTRAR_ADMITIDOS = getIntent().getBooleanExtra("admitidos", true);
         MOSTRAR_EN_REPARACION = getIntent().getBooleanExtra("en_reparacion", true);
-        MOSTRAR_REPARADOS = getIntent().getBooleanExtra("reaparados", true);
+        MOSTRAR_REPARADOS = getIntent().getBooleanExtra("reparados", true);
+
+        if (MOSTRAR_ADMITIDOS)
+            Toast.makeText(MainActivity.this, "MOSTRAR_ADMITIDOS", Toast.LENGTH_LONG).show();
 
         ORDENAR_POR_FECHA = getIntent().getBooleanExtra("fecha", true);
         ORDENAR_POR_COMENTARIOS = getIntent().getBooleanExtra("comentarios", false);
         ORDENAR_POR_VALORACION = getIntent().getBooleanExtra("gravedad", false);
 
         invalidateOptionsMenu();
+        cargarLista();
 
     }
 
@@ -207,6 +215,14 @@ public class MainActivity extends AppCompatActivity {
                         TextView comentarios = (TextView) fila.findViewById(R.id.tv_item_comentarios);
                         comentarios.setText(String.valueOf(listaDesperfectosMostrar.get(position).getComentarios().size()));
 
+                        //ESTADO
+                        TextView estado = (TextView) fila.findViewById(R.id.tv_item_estado);
+                        estado.setText(String.valueOf(listaDesperfectosMostrar.get(position).getEstado()));
+
+                        if (listaDesperfectosMostrar.get(position).getEstado().equals("Admitido")) estado.setTextColor(rgb(23, 23, 255));
+                        if (listaDesperfectosMostrar.get(position).getEstado().equals("En reparacion")) estado.setTextColor(rgb(255, 116, 29));
+                        if (listaDesperfectosMostrar.get(position).getEstado().equals("Reparado")) estado.setTextColor(rgb(2, 94, 29));
+
                         if(!listaDesperfectosMostrar.get(position).getImagenes().isEmpty()){
                             Picasso.with(getApplicationContext()).load(listaDesperfectosMostrar.get(position).getImagenes().get(0)).into(iv);
                         }
@@ -282,10 +298,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         FirebaseUser user = mAuth.getCurrentUser();
         MenuItem settingsItem = menu.findItem(R.id.action_login);
+
         if (user == null) {
             // set your desired icon here based on a flag if you like
             settingsItem.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_icon_login));
-        }else{
+        }else if (admins.contains(user.getUid())){
+            settingsItem.setIcon(ContextCompat.getDrawable(this, R.drawable.admin));
+        } else {
             settingsItem.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_icon_logout));
         }
 

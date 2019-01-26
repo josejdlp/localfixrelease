@@ -3,6 +3,7 @@ package com.example.josejimenezdelapaz.localfix;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import static android.graphics.Color.rgb;
 
 public class VisualizarDesperfecto extends AppCompatActivity {
 
@@ -69,9 +72,6 @@ public class VisualizarDesperfecto extends AppCompatActivity {
 
             }
         });
-
-
-
     }
 
     private void actualizarPuntaciones() {
@@ -111,15 +111,22 @@ public class VisualizarDesperfecto extends AppCompatActivity {
 
         TextView titulo = (TextView) findViewById(R.id.tv_title);
         ImageView img = (ImageView) findViewById(R.id.iv_img);
+        TextView estado = (TextView) findViewById(R.id.tv_estado_visualizar_desp);
         TextView usuario = (TextView) findViewById(R.id.tv_user);
         TextView descripcion = (TextView) findViewById(R.id.tv_description);
         TextView gravedad = (TextView) findViewById(R.id.tv_gravedad);
 
         titulo.setText(desperfecto.getTitulo());
-        usuario.setText("AUTOR: " + desperfecto.getAutor());
-        descripcion.setText("DESCRIPCIÓN:" + desperfecto.getDescripcion());
+        usuario.setText(desperfecto.getAutor());
+        descripcion.setText(desperfecto.getDescripcion());
         String g = String.format("%.1f", desperfecto.calcularGravedad());
         gravedad.setText("GRAVEDAD: " + g);
+
+        estado.setText(desperfecto.getEstado());
+
+        if (desperfecto.getEstado().equals("Admitido")) estado.setTextColor(rgb(23, 23, 255));
+        if (desperfecto.getEstado().equals("En reparacion")) estado.setTextColor(rgb(255, 116, 29));
+        if (desperfecto.getEstado().equals("Reparado")) estado.setTextColor(rgb(2, 94, 29));
 
         //CARGAR IMAGENES
         if(!desperfecto.getImagenes().isEmpty()){
@@ -170,9 +177,6 @@ public class VisualizarDesperfecto extends AppCompatActivity {
             return;
         }
 
-        //String id = FirebaseDatabase.getInstance().getReference().child("Desperfectos").child(desperfecto.getId()).child("comentarios").push().getKey();
-        //Toast.makeText(VisualizarDesperfecto.this, id, Toast.LENGTH_LONG).show();
-
         Integer id = desperfecto.getComentarios().size();
         Comentario nuevoComentario = new Comentario(texto.getText().toString(),
                 mAuth.getCurrentUser().getEmail());
@@ -180,11 +184,8 @@ public class VisualizarDesperfecto extends AppCompatActivity {
 
         referenciaBBDD.child("comentarios").child(id.toString()).setValue(nuevoComentario);
 
-        //desperfecto.getComentarios().add(nuevoComentario);
-
         texto.setText("");
         Toast.makeText(VisualizarDesperfecto.this, "Mensaje enviado con éxito", Toast.LENGTH_LONG).show();
-        //cargarComentarios();
     }
 
     public void btn_puntuar(View view){
@@ -214,12 +215,6 @@ public class VisualizarDesperfecto extends AppCompatActivity {
                     .setValue(nueva);
         }
 
-
-
-        //TextView tv_gravidad = (TextView) findViewById(R.id.tv_gravedad);
-        //tv_gravidad.clearComposingText();
-        //tv_gravidad.setText("GRAVEDAD: " + tv_gravidad.getText().toString());
-
     }
 
     public void siguienteImagen(View view){
@@ -235,19 +230,36 @@ public class VisualizarDesperfecto extends AppCompatActivity {
         }
     }
 
-    public void anteriorImagen(View view){
-        if(desperfecto.getImagenes()!=null){
-            ImageView img=(ImageView) findViewById(R.id.iv_img);
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event){
+        switch (keyCode){
+            case KeyEvent.KEYCODE_ENTER:
+                if (mAuth.getCurrentUser() == null){
+                    Toast.makeText(VisualizarDesperfecto.this, "¡No puedes comentar si no estás logueado!", Toast.LENGTH_LONG).show();
+                    return true;
 
-            if(posImagen > 0){
-                posImagen--;
-                Picasso.with(this).load(desperfecto.getImagenes().get(posImagen)).into(img);
+                }
 
-            }else if(posImagen==0){
-                posImagen=desperfecto.getImagenes().size()-1;
-                Picasso.with(this).load(desperfecto.getImagenes().get(posImagen)).into(img);
+                TextView texto = (TextView) findViewById(R.id.et_escribir_comentario);
 
-            }
+                if (texto.getText().toString().isEmpty()){
+                    Toast.makeText(VisualizarDesperfecto.this, "No se ha escrito nada", Toast.LENGTH_LONG).show();
+                    return true;
+                }
+
+                Integer id = desperfecto.getComentarios().size();
+                Comentario nuevoComentario = new Comentario(texto.getText().toString(),
+                        mAuth.getCurrentUser().getEmail());
+
+
+                referenciaBBDD.child("comentarios").child(id.toString()).setValue(nuevoComentario);
+
+                texto.setText("");
+                Toast.makeText(VisualizarDesperfecto.this, "Mensaje enviado con éxito", Toast.LENGTH_LONG).show();
+                return true;
+            default:
+                return super.onKeyUp(keyCode, event);
         }
     }
+
 }

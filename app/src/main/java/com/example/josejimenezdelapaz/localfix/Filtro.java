@@ -29,7 +29,7 @@ public class Filtro extends AppCompatActivity {
         no_admitidos = (CheckBox) findViewById(R.id.cb_no_admitidos);
         admitidos = (CheckBox) findViewById(R.id.cb_admitidos);
         en_reparacion = (CheckBox) findViewById(R.id.cb_en_reparacion);
-        reparados = (CheckBox) findViewById(R.id.cb_reparados);
+        reparados = (CheckBox) findViewById(R.id.cb_repara);
 
         ordenar_fecha = (CheckBox) findViewById(R.id.cb_ordenar_fecha);
         ordenar_comentarios = (CheckBox) findViewById(R.id.cb_ordenar_comentarios);

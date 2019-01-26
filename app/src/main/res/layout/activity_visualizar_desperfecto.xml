@@ -37,6 +37,16 @@
                 app:srcCompat="@drawable/arbol"
                 android:paddingBottom="10dp"/>
 
+            <TextView
+                android:id="@+id/tv_estado_visualizar_desp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Estado"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="5dp"/>
+
             <Button
                 android:id="@+id/btn_next_img"
                 android:layout_width="200dp"

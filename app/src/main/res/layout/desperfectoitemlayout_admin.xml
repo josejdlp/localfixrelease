@@ -67,7 +67,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_lista_desp_admin"
-        app:layout_constraintVertical_bias="0.033" />
+        app:layout_constraintVertical_bias="0.055" />
 
     <Button
         android:id="@+id/admitir_lista_desp_admin"
@@ -82,7 +82,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/borrar_lista_desp_admin"
         app:layout_constraintTop_toBottomOf="@+id/ubi_lista_desp_admin"
-        app:layout_constraintVertical_bias="0.052" />
+        app:layout_constraintVertical_bias="0.073" />
 
     <Button
         android:id="@+id/reparar_lista_desp_admin"
@@ -97,7 +97,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/admitir_lista_desp_admin"
         app:layout_constraintTop_toBottomOf="@+id/ubi_lista_desp_admin"
-        app:layout_constraintVertical_bias="0.052" />
+        app:layout_constraintVertical_bias="0.073" />
 
     <Button
         android:id="@+id/finalizar_lista_desp_admin"
@@ -112,7 +112,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/reparar_lista_desp_admin"
         app:layout_constraintTop_toBottomOf="@+id/ubi_lista_desp_admin"
-        app:layout_constraintVertical_bias="0.052" />
+        app:layout_constraintVertical_bias="0.073" />
 
     <TextView
         android:id="@+id/estado_lista_desp_admin"
