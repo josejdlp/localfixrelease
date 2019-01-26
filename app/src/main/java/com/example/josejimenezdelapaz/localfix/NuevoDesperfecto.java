@@ -1,10 +1,21 @@
 package com.example.josejimenezdelapaz.localfix;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Camera;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -15,7 +26,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class NuevoDesperfecto extends AppCompatActivity {
 
@@ -23,11 +38,19 @@ public class NuevoDesperfecto extends AppCompatActivity {
     private ArrayList<String> listaUrls = new ArrayList<String>();
     private final static int code = 1000;
     private final static int codeMapa = 1001;
+    private final static int codeCamera = 1002;
     private float gravedad = 0;
     private String direccion = "";
     private String lat = "";
     private String lon = "";
     private ArrayList<Desperfecto> desperfectos = new ArrayList<>();
+    private String mCurrentPhotoPath = "";
+
+    //Camara
+    private Camera mCamera = null;
+    private CameraView mCameraView = null;
+    private File imageFile;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +62,8 @@ public class NuevoDesperfecto extends AppCompatActivity {
         ImageView IVimages, IVcamera;
         IVimages = (ImageView) findViewById(R.id.IV_images);
         IVcamera = (ImageView) findViewById(R.id.IV_camera);
+
+        checkStoragePermission();
 
         Bundle bundleObject=getIntent().getExtras();
 
@@ -54,8 +79,43 @@ public class NuevoDesperfecto extends AppCompatActivity {
         IVimages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent images = new Intent(NuevoDesperfecto.this, UploadImages.class);
                 startActivityForResult(images, code);
+            }
+        });
+
+        IVcamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent toCamera = new Intent(NuevoDesperfecto.this, CameraActivity.class);
+                //Intent toCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                //startActivityForResult(toCamera, codeCamera);
+
+                checkCameraPermission();
+
+
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                    File photoFile = null;
+                    try{
+                        photoFile = createImageFile();
+                    }catch (Exception e){
+                        Log.i("Mensaje", "No se ha podido crear el archivo");
+                    }
+                    if(photoFile != null){
+                        Uri photoURI = FileProvider.getUriForFile(NuevoDesperfecto.this,
+                                "com.example.android.fileprovider",
+                                photoFile);
+                        Log.i("Mensaje_PhotoURI", photoURI.toString());
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                        startActivityForResult(takePictureIntent, codeCamera);
+                    }
+
+                }
+
+
+
             }
         });
 
@@ -160,8 +220,62 @@ public class NuevoDesperfecto extends AppCompatActivity {
                 Toast.makeText(this, "No has seleccionado ninguna dirección", Toast.LENGTH_SHORT).show();
             }
 
+        } else if (requestCode == codeCamera && resultCode==RESULT_OK){
+            super.onActivityResult(requestCode, resultCode, data);
+            Log.i("Mensaje_OnResult", "Vamos a funcion galleryAddPic");
+            galleryAddPic();
+
         }
 
+    }
+
+    private void checkCameraPermission() {
+        int permissionCheck = ContextCompat.checkSelfPermission(
+                this, Manifest.permission.CAMERA);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            Log.i("Mensaje", "No se tiene permiso para la camara!.");
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 225);
+        } else {
+            Log.i("Mensaje", "Tienes permiso para usar la camara.");
+        }
+    }
+
+    private void checkStoragePermission() {
+        int permissionCheck = ContextCompat.checkSelfPermission(
+                this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            Log.i("Mensaje", "No se tiene permiso para la write storage!.");
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 225);
+        } else {
+            Log.i("Mensaje", "Tienes permiso para usar la write storage.");
+        }
+
+
+    }
+
+    private void galleryAddPic() {
+        Log.i("Mensaje_ToGallery", "Vamos a guardar en galeria");
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
     }
 }
 

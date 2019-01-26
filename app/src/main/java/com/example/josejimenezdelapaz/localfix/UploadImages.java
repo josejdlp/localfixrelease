@@ -49,6 +49,7 @@ public class UploadImages extends AppCompatActivity {
         fileNameList = new ArrayList<>();
         fileDoneList = new ArrayList<>();
         uploadListAdapter = new UploadListAdapter(fileNameList, fileDoneList);
+
         //RecyclerView
         mUploadList.setLayoutManager(new LinearLayoutManager(this));
         mUploadList.setHasFixedSize(true);
@@ -110,8 +111,6 @@ public class UploadImages extends AppCompatActivity {
                                 fileToUpload.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
-
-
                                         Toast.makeText(UploadImages.this, "onSuccess: uri= " + uri.toString(), Toast.LENGTH_SHORT).show();
                                         listaURLs.add(uri.toString());
                                     }
