@@ -118,7 +118,8 @@ public class VisualizarDesperfecto extends AppCompatActivity {
         titulo.setText(desperfecto.getTitulo());
         usuario.setText("AUTOR: " + desperfecto.getAutor());
         descripcion.setText("DESCRIPCIÓN:" + desperfecto.getDescripcion());
-        gravedad.setText("GRAVEDAD: " + String.valueOf(desperfecto.calcularGravedad()));
+        String g = String.format("%.1f", desperfecto.calcularGravedad());
+        gravedad.setText("GRAVEDAD: " + g);
 
         //CARGAR IMAGENES
         if(!desperfecto.getImagenes().isEmpty()){
@@ -215,8 +216,9 @@ public class VisualizarDesperfecto extends AppCompatActivity {
 
 
 
-        TextView tv_gravidad = (TextView) findViewById(R.id.tv_gravedad);
-        tv_gravidad.setText("GRAVEDAD: " + tv_gravidad.getText().toString());
+        //TextView tv_gravidad = (TextView) findViewById(R.id.tv_gravedad);
+        //tv_gravidad.clearComposingText();
+        //tv_gravidad.setText("GRAVEDAD: " + tv_gravidad.getText().toString());
 
     }
 

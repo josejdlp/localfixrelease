@@ -79,6 +79,9 @@ public class Desperfecto implements Serializable {
 
     public float calcularGravedad(){
 
+        if(valoraciones.size() == 0)
+            return 0;
+
         float valoracionTotal = 0;
 
         for (Valoracion valoracion : valoraciones){
