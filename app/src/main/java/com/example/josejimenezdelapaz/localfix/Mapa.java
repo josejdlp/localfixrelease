@@ -163,7 +163,7 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMapLongClickLi
         double minLon=posActual.longitude-tasa;
         ArrayList<Desperfecto> l=new ArrayList<>();
         for(int i=0;i<listaDesperfectos.size();i++){
-            if(listaDesperfectos.get(i).getLatitud()!=null && listaDesperfectos.get(i).getLongitud()!=null){
+            if(!listaDesperfectos.get(i).getLatitud().isEmpty() && listaDesperfectos.get(i).getLongitud().isEmpty()){
                 if(Double.valueOf(listaDesperfectos.get(i).getLatitud())<=maxLat &&
                         Double.valueOf(listaDesperfectos.get(i).getLatitud())>=minLat&&
                         Double.valueOf( listaDesperfectos.get(i).getLongitud())<=maxLon &&
@@ -196,15 +196,21 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMapLongClickLi
             startActivity(visualizarDesperfecto);
             //finish();
         }*/
-        //Enviar el desperfecto seleccionado a la vista.
-        int posicion=mHashMap.get(marker);
-        Intent visualizarDesperfecto = new Intent (Mapa.this, VisualizarDesperfecto.class);
-        Bundle bundle=new Bundle();
-        bundle.putSerializable("desperfecto",listaDesperfectos.get(posicion));
-        visualizarDesperfecto.putExtras(bundle);
-        // visualizarDesperfecto.putExtra("EXTRA_IMAGENES", listaDesperfectos.get(position).getImagenes());
-        startActivity(visualizarDesperfecto);
-        //finish();
+
+       if(listaDesperfectos.isEmpty()){
+           DevolverDireccion(direccion);
+       }else {
+
+           //Enviar el desperfecto seleccionado a la vista.
+           int posicion = mHashMap.get(marker);
+           Intent visualizarDesperfecto = new Intent(Mapa.this, VisualizarDesperfecto.class);
+           Bundle bundle = new Bundle();
+           bundle.putSerializable("desperfecto", listaDesperfectos.get(posicion));
+           visualizarDesperfecto.putExtras(bundle);
+           // visualizarDesperfecto.putExtra("EXTRA_IMAGENES", listaDesperfectos.get(position).getImagenes());
+           startActivity(visualizarDesperfecto);
+           //finish();
+       }
 
     }
     @Override
@@ -212,6 +218,7 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMapLongClickLi
         //SELECCIÓN DE UBICACIÓN DEL DESPERFECTO MODALIDAD=0
         if(modalidad==0){
             mMap.clear();
+            listaDesperfectos.clear();
             direccion=CargarDireccionDeCoordenadas(latLng);
             lat=String.valueOf(latLng.latitude);
             lon=String.valueOf(latLng.longitude);
@@ -220,6 +227,14 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMapLongClickLi
                     .title(direccion));
             //VISUALIZACION DEL MAPA PARA VER DESPERFECTOS
         }else  if(modalidad==1){
+            mMap.clear();
+            direccion=CargarDireccionDeCoordenadas(latLng);
+            lat=String.valueOf(latLng.latitude);
+            lon=String.valueOf(latLng.longitude);
+            marcaNuevoDesperfecto=mMap.addMarker(new MarkerOptions()
+                    .position(latLng)
+                    .title(direccion));
+
         }
     }
     private void DevolverDireccion(String direccion){

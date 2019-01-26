@@ -111,6 +111,11 @@ public class NuevoDesperfecto extends AppCompatActivity {
 
         //Gravedad, en la variable gravedad
         String id = referenciaBBDD.push().getKey();
+
+        //Imagenes
+        if(listaUrls.isEmpty()){
+            listaUrls.add("https://firebasestorage.googleapis.com/v0/b/fir-prueba-e2948.appspot.com/o/Images%2Fadvert.png?alt=media&token=90560e94-3cdc-48c8-9fea-f9a8686f6bc6");
+        }
         Desperfecto nuevo = new Desperfecto(id
                 , FirebaseAuth.getInstance().getCurrentUser().getEmail()
                 , titulo, lat, lon, descripcion
@@ -148,8 +153,8 @@ public class NuevoDesperfecto extends AppCompatActivity {
                 lat = data.getStringExtra("lat");
                 lon = data.getStringExtra("lon");
                 TextView text = (TextView) findViewById(R.id.tv_direccion);
-                text.setText(direccion + lat + lon);
-                Toast.makeText(this, "Direccion obtenida: " + direccion + lat + lon, Toast.LENGTH_SHORT).show();
+                text.setText(direccion);
+
             } else {
                 Toast.makeText(this, "No has seleccionado ninguna dirección", Toast.LENGTH_SHORT).show();
             }
