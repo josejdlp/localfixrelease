@@ -33,7 +33,7 @@ public class UploadImages extends AppCompatActivity {
     private List<String> fileDoneList;
 
     private UploadListAdapter uploadListAdapter;
-    private final static int code=1000;
+    private final static int code = 1000;
     private StorageReference mStorage;
 
     private ImageView iv_uploadImg;

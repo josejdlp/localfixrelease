@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 public class Busqueda extends AppCompatActivity {
 
     TextView busqueda;
@@ -22,6 +20,8 @@ public class Busqueda extends AppCompatActivity {
         busqueda = (TextView) findViewById(R.id.texto_busqueda);
         buscar = (ImageButton) findViewById(R.id.btn_buscar_vista_buscar);
     }
+
+
 
     public void btn_buscar(View view){
         String texto =  busqueda.getText().toString();
