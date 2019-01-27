@@ -100,26 +100,28 @@ public class VistaAdministrador extends AppCompatActivity {
                                 .getSystemService(getContext().LAYOUT_INFLATER_SERVICE);
 
 
+                        final int tam = listaDesperfectos.size() - 1;
+
                         //Crear la vista para cada fila
                         final View fila = inflater.inflate(R.layout.desperfectoitemlayout_admin, parent, false);
 
                         //TÍTULO
                         TextView tituloView = (TextView) fila.findViewById(R.id.tit_lista_desp_admin);
-                        tituloView.setText(listaDesperfectos.get(position).getTitulo());
+                        tituloView.setText(listaDesperfectos.get(tam - position).getTitulo());
 
                         //UBICACION
                         TextView ubicacionView = (TextView) fila.findViewById(R.id.ubi_lista_desp_admin);
-                        ubicacionView.setText(listaDesperfectos.get(position).getDireccion());
+                        ubicacionView.setText(listaDesperfectos.get(tam - position).getDireccion());
 
                         //ESTADO
                         TextView estado = (TextView) fila.findViewById(R.id.estado_lista_desp_admin);
-                        estado.setText(listaDesperfectos.get(position).getEstado());
+                        estado.setText(listaDesperfectos.get(tam - position).getEstado());
 
                         //IMAGEN
                         ImageView iv = (ImageView) fila.findViewById(R.id.img_lista_desp_admin);
 
-                        if (!listaDesperfectos.get(position).getImagenes().isEmpty()){
-                            Picasso.with(getApplicationContext()).load(listaDesperfectos.get(position)
+                        if (!listaDesperfectos.get(tam - position).getImagenes().isEmpty()){
+                            Picasso.with(getApplicationContext()).load(listaDesperfectos.get(tam - position)
                             .getImagenes().get(0)).into(iv);
                         }
 
@@ -133,7 +135,7 @@ public class VistaAdministrador extends AppCompatActivity {
                         botonBorrar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v){
-                                referenciaBBDD.child(listaDesperfectos.get(position).getId()).removeValue();
+                                referenciaBBDD.child(listaDesperfectos.get(tam - position).getId()).removeValue();
                                 //Cuando se borra, no se refrescan las vistas, así que recargamos
                                 showListaDesperfectos();
                             }
@@ -142,7 +144,7 @@ public class VistaAdministrador extends AppCompatActivity {
                         botonAdmitir.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                referenciaBBDD.child(listaDesperfectos.get(position).getId()).child("estado").setValue(ESTADO_ADMITIDO);
+                                referenciaBBDD.child(listaDesperfectos.get(tam - position).getId()).child("estado").setValue(ESTADO_ADMITIDO);
                                 TextView estado = (TextView) fila.findViewById(R.id.estado_lista_desp_admin);
                                 estado.setText(ESTADO_ADMITIDO);
 
@@ -152,7 +154,7 @@ public class VistaAdministrador extends AppCompatActivity {
                         botonReparar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                referenciaBBDD.child(listaDesperfectos.get(position).getId()).child("estado").setValue(ESTADO_EN_REPARACION);
+                                referenciaBBDD.child(listaDesperfectos.get(tam - position).getId()).child("estado").setValue(ESTADO_EN_REPARACION);
                                 TextView estado = (TextView) fila.findViewById(R.id.estado_lista_desp_admin);
                                 estado.setText(ESTADO_EN_REPARACION);
                             }
@@ -161,7 +163,7 @@ public class VistaAdministrador extends AppCompatActivity {
                         botonFinalizar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                referenciaBBDD.child(listaDesperfectos.get(position).getId()).child("estado").setValue(ESTADO_REPARADO);
+                                referenciaBBDD.child(listaDesperfectos.get(tam - position).getId()).child("estado").setValue(ESTADO_REPARADO);
                                 TextView estado = (TextView) fila.findViewById(R.id.estado_lista_desp_admin);
                                 estado.setText(ESTADO_REPARADO);
                             }
@@ -180,9 +182,12 @@ public class VistaAdministrador extends AppCompatActivity {
                             ,View view
                             ,int position
                             ,long l) {
+
+                        int tam = listaDesperfectos.size() - 1;
+
                         //Enviar el desperfecto seleccionado a la vista.
                         Intent visualizarDesperfecto = new Intent (VistaAdministrador.this, VisualizarDesperfecto.class);
-                        visualizarDesperfecto.putExtra("desperfecto", listaDesperfectos.get(position).getId());
+                        visualizarDesperfecto.putExtra("desperfecto", listaDesperfectos.get(tam - position).getId());
                         startActivity(visualizarDesperfecto);
                     }
                 }

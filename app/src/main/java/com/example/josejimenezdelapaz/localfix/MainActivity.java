@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
         if (ORDENAR_POR_VALORACION) {
             Collections.sort(listaDesperfectosMostrar, new Comparator<Desperfecto>(){
                 public int compare(Desperfecto d1, Desperfecto d2){
-                    return d1.calcularGravedad() < d2.calcularGravedad() ? 1
+                    return d1.calcularGravedad() > d2.calcularGravedad() ? 1
                             :d1.calcularGravedad() == d2.calcularGravedad() ? 0 : -1;
                 }
             });
@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
         if (ORDENAR_POR_COMENTARIOS) {
             Collections.sort(listaDesperfectosMostrar, new Comparator<Desperfecto>(){
                 public int compare(Desperfecto d1, Desperfecto d2){
-                    return d1.getComentarios().size() < d2.getComentarios().size() ? 1
+                    return d1.getComentarios().size() > d2.getComentarios().size() ? 1
                             :d1.getComentarios().size() == d2.getComentarios().size() ? 0 : -1;
                 }
             });
@@ -192,36 +192,38 @@ public class MainActivity extends AppCompatActivity {
                         LayoutInflater inflater = (LayoutInflater) getContext()
                                 .getSystemService(getContext().LAYOUT_INFLATER_SERVICE);
 
+                        int tam = listaDesperfectosMostrar.size() - 1;
+
                         //Crear la vista para cada fila
                         View fila = inflater.inflate(R.layout.desperfectoitemlayout, parent, false);
                         //TITULO
                         TextView tituloView = (TextView) fila.findViewById(R.id.textTitulo);
-                        tituloView.setText(listaDesperfectosMostrar.get(position).getTitulo());
+                        tituloView.setText(listaDesperfectosMostrar.get(tam - position).getTitulo());
                         //UBICACIÓN
                         TextView ubicacionView = (TextView) fila.findViewById(R.id.textUbicacion);
-                        ubicacionView.setText(listaDesperfectosMostrar.get(position).getDireccion());
+                        ubicacionView.setText(listaDesperfectosMostrar.get(tam - position).getDireccion());
                         //Imagen
                         ImageView iv=(ImageView) fila.findViewById(R.id.imgIcono);
 
                         //GRAVEDAD
                         TextView gravedad = (TextView) fila.findViewById(R.id.tv_item_gravedad);
-                        String g = String.format("%.1f", listaDesperfectosMostrar.get(position).calcularGravedad());
+                        String g = String.format("%.1f", listaDesperfectosMostrar.get(tam - position).calcularGravedad());
                         gravedad.setText(g);
 
                         //COMENTARIOS
                         TextView comentarios = (TextView) fila.findViewById(R.id.tv_item_comentarios);
-                        comentarios.setText(String.valueOf(listaDesperfectosMostrar.get(position).getComentarios().size()));
+                        comentarios.setText(String.valueOf(listaDesperfectosMostrar.get(tam - position).getComentarios().size()));
 
                         //ESTADO
                         TextView estado = (TextView) fila.findViewById(R.id.tv_item_estado);
-                        estado.setText(String.valueOf(listaDesperfectosMostrar.get(position).getEstado()));
+                        estado.setText(String.valueOf(listaDesperfectosMostrar.get(tam - position).getEstado()));
 
-                        if (listaDesperfectosMostrar.get(position).getEstado().equals("Admitido")) estado.setTextColor(rgb(23, 23, 255));
-                        if (listaDesperfectosMostrar.get(position).getEstado().equals("En reparacion")) estado.setTextColor(rgb(255, 116, 29));
-                        if (listaDesperfectosMostrar.get(position).getEstado().equals("Reparado")) estado.setTextColor(rgb(2, 94, 29));
+                        if (listaDesperfectosMostrar.get(tam - position).getEstado().equals("Admitido")) estado.setTextColor(rgb(23, 23, 255));
+                        if (listaDesperfectosMostrar.get(tam - position).getEstado().equals("En reparacion")) estado.setTextColor(rgb(255, 116, 29));
+                        if (listaDesperfectosMostrar.get(tam - position).getEstado().equals("Reparado")) estado.setTextColor(rgb(2, 94, 29));
 
-                        if(!listaDesperfectosMostrar.get(position).getImagenes().isEmpty()){
-                            Picasso.with(getApplicationContext()).load(listaDesperfectosMostrar.get(position).getImagenes().get(0)).into(iv);
+                        if(!listaDesperfectosMostrar.get(tam - position).getImagenes().isEmpty()){
+                            Picasso.with(getApplicationContext()).load(listaDesperfectosMostrar.get(tam - position).getImagenes().get(0)).into(iv);
                         }
 
                         return fila;
@@ -236,9 +238,12 @@ public class MainActivity extends AppCompatActivity {
                             ,View view
                             ,int position
                             , long l){
+
+                        int tam = listaDesperfectosMostrar.size() - 1;
+
                         //Enviar el desperfecto seleccionado a la vista.
                         Intent visualizarDesperfecto = new Intent (MainActivity.this, VisualizarDesperfecto.class);
-                        visualizarDesperfecto.putExtra("desperfecto", listaDesperfectosMostrar.get(position).getId());
+                        visualizarDesperfecto.putExtra("desperfecto", listaDesperfectosMostrar.get(tam - position).getId());
                         startActivity(visualizarDesperfecto);
                     }
                 }
@@ -302,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
         }else if (admins.contains(user.getUid())){
             settingsItem.setIcon(ContextCompat.getDrawable(this, R.drawable.admin));
         } else {
-            settingsItem.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_icon_logout));
+            settingsItem.setIcon(ContextCompat.getDrawable(this, R.drawable.admin));
         }
 
         return super.onPrepareOptionsMenu(menu);
