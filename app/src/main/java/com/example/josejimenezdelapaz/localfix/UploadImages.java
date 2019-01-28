@@ -111,28 +111,19 @@ public class UploadImages extends AppCompatActivity {
                                 fileToUpload.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
-                                        Toast.makeText(UploadImages.this, "onSuccess: uri= " + uri.toString(), Toast.LENGTH_SHORT).show();
                                         listaURLs.add(uri.toString());
                                     }
                                 });
-
                             }
                         });
-
                     }
                 }else{
                     Toast.makeText(getApplicationContext(), "Selecciona máximo 4 imágenes", Toast.LENGTH_LONG).show();
                 }
-                //Toast.makeText(MainActivity.this, "Selected Multiple Files", Toast.LENGTH_SHORT).show();
-
             } else if (data.getData() != null){
-
                 Toast.makeText(this, "Seleccione como mínimo 2 imágenes", Toast.LENGTH_SHORT).show();
-
             }
-
         }
-
     }
 
     public String getFileName(Uri uri) {
